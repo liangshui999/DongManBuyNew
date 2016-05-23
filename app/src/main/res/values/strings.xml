@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">DongManBuy</string>
+    <string name="action_settings">Settings</string>
+    <string name="search_hint">搜索动漫周边商品/店铺</string>
+    <string name="message">消息</string>
+    <string name="sao">扫一扫</string>
+    <string name="home">首页</string>
+    <string name="category">分类</string>
+    <string name="find">发现</string>
+    <string name="shop_street">店铺街</string>
+    <string name="shopping_car">购物车</string>
+    <string name="my_wallet">我的钱包</string>
+    <string name="my_order">我的订单</string>
+    <string name="browse_history">浏览记录</string>
+    <string name="ship_address">收货地址</string>
+    <string name="xian_shi_te_you">限时特优</string>
+    <string name="help">帮助中心</string>
+    <string name="brand_page">品牌页面</string>
+    <string name="you_hui_huo_dong">优惠活动</string>
+    <string name="xian_shi_miao_sha">限时秒杀</string>
+    <string name="miao_sha_time">1天1时1分1秒</string>
+    <string name="jing_pin_tui_jian">精品推荐</string>
+    <string name="jing_ping_tui_jian_content">精品商品尽收眼底赶快行动吧</string>
+    <string name="more">更多</string>
+    <string name="email">2543111@qq.com</string>
+    <string name="zhou_mou_buy">ZHOUMOBUY周末</string>
+    <string name="my_page">我的主页</string>
+    <string name="my_shou_cang">我的收藏</string>
+    <string name="guan_zhu_dian_pu">关注店铺</string>
+    <string name="change_password">修改密码</string>
+    <string name="setting">设置</string>
+</resources>
