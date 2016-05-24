@@ -10,7 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <!--广告条和指示点-->
+            <!--第一个广告条和指示点-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
                 </android.support.v4.view.ViewPager>
 
                 <LinearLayout
-                    android:id="@+id/ll_point_group"
+                    android:id="@+id/ll_point_group_first"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/viewpager_binner_first"
@@ -248,6 +248,27 @@
                 >
             </com.example.asus_cp.dongmanbuy.customview.MyGridView>
 
+            <!--第二个广告条和指示点-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager_binner_second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="160dp">
+                </android.support.v4.view.ViewPager>
+
+                <LinearLayout
+                    android:id="@+id/ll_point_group_second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/viewpager_binner_second"
+                    android:layout_centerInParent="true"
+                    android:orientation="horizontal">
+                </LinearLayout>
+            </RelativeLayout>
+
 
             <!--精品推荐-->
             <LinearLayout
@@ -282,6 +303,27 @@
                 android:gravity="center"
                 >
             </com.example.asus_cp.dongmanbuy.customview.MyGridView>
+
+            <!--第三个广告条-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager_binner_three"
+                    android:layout_width="wrap_content"
+                    android:layout_height="160dp">
+                </android.support.v4.view.ViewPager>
+
+                <LinearLayout
+                    android:id="@+id/ll_point_group_three"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/viewpager_binner_three"
+                    android:layout_centerInParent="true"
+                    android:orientation="horizontal">
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </com.example.asus_cp.dongmanbuy.customview.MyScrollView>
 

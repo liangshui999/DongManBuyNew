@@ -10,6 +10,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import com.example.asus_cp.dongmanbuy.R;
+import com.example.asus_cp.dongmanbuy.util.MyLog;
 import com.example.asus_cp.dongmanbuy.util.ScreenUtils;
 
 /**
@@ -114,45 +115,71 @@ public class SlidingMenu extends HorizontalScrollView
         float firstX=0;
         switch (action)
         {
+            /*case MotionEvent.ACTION_DOWN:
+                MyLog.d(tag, "拦截了"+mMenuWidth);
+                this.scrollTo(200, 0);
+                return true;*/
             // Up时，进行判断，如果显示区域大于菜单宽度一半则完全显示，否则隐藏
             case MotionEvent.ACTION_UP:
                 int scrollX = getScrollX();
-                if (scrollX > mHalfMenuWidth)
+                MyLog.d(tag,scrollX+"");
+                if (scrollX <-100)
                 {
-                    this.smoothScrollTo(mMenuWidth, 0);
+                    this.smoothScrollTo(-200, 0);
                     isOpen = false;
                 } else
                 {
                     this.smoothScrollTo(0, 0);
                     isOpen = true;
                 }
-                return false;
+                return true;
         }
-        return false;
+        return true;
     }
 
+
+    /*case MotionEvent.ACTION_UP:
+    int scrollX = getScrollX();
+    if (scrollX > mHalfMenuWidth)
+    {
+        this.smoothScrollTo(mMenuWidth, 0);
+        isOpen = false;
+    } else
+    {
+        this.smoothScrollTo(0, 0);
+        isOpen = true;
+    }*/
     /**
      * 拦截事件的方法,最外层的不拦截任何事件
      *
      */
+    private float interceptedX=0;//这个要定义成员变量
+    private float interceptedY=0;//这个要定义成员变量
+
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if(isOpen){
+            return true;
+        }
         boolean intercepted=false;
         float x=ev.getX();
-        float interceptedX=0;
+        float y=ev.getY();
         switch (ev.getAction()){
             case MotionEvent.ACTION_DOWN:
                 intercepted=false;
                 break;
             case MotionEvent.ACTION_MOVE:
-                if(x-interceptedX>0){   //从左往右滑动,要划出菜单
-                    intercepted=false;
-                    //MyLog.d(tag,"侧滑从左往右滑动");
+                float deltaX=x-interceptedX;
+                float deltaY=y-interceptedY;
+                if(deltaX>0 && Math.abs(deltaX)>Math.abs(deltaY)){   //从左往右滑动,要划出菜单
+                    intercepted=true;
+                    MyLog.d(tag, "侧滑从左往右滑动");
                 }else {
                     intercepted=false;
                     //MyLog.d(tag,"侧滑从左往右滑动");
                 }
                 interceptedX=x;
+                interceptedY=y;
                 break;
             case MotionEvent.ACTION_UP:
                 intercepted=false;

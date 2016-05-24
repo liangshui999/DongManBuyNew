@@ -45,20 +45,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 首页的展示界面
  * Created by asus-cp on 2016-05-19.
  */
 public class HomeFragment extends Fragment implements View.OnClickListener{
     private String tag="HomeFragment";
+    //第一个广告条
     private ViewPager firstViewPager;
-    private List<View> imageViews;//装载imageview的集合
+    private LinearLayout firstPointGroup;
+    public static final int SCROLL__FIRST_BINNER =1;//自动滚动消息的what
+    public static final int REFRESH_FIRST_BINNER = 2;//更新第一个位置的广告的
+    private static final int FIRST_BINNER_FLAG =1 ;//第一幅广告的标记
+    private List<View> firstImageViews;//装载imageview的集合
+
+    //第二个广告条
+    private ViewPager secondViewPager;
+    private LinearLayout secondPointGroup;
+    public static final int SCROLL__SECOND_BINNER =3;//自动滚动消息的what
+    public static final int REFRESH_SECOND_BINNER = 4;//更新第一个位置的广告的
+    private static final int SECOND_BINNER_FLAG =2 ;//第二幅广告的标记
+    private List<View> secondImageViews;//装载imageview的集合
+
+    //第三个广告条
+    private ViewPager threeViewPager;
+    private LinearLayout threePointGroup;
+    public static final int SCROLL__THREE_BINNER =5;//自动滚动消息的what
+    public static final int REFRESH_THREE_BINNER = 6;//更新第一个位置的广告的
+    private static final int THREE_BINNER_FLAG =3 ;//第三幅广告的标记
+    private List<View> threeImageViews;//装载imageview的集合
+
+
+
     private int[] imageIds={R.drawable.guanggao1,R.drawable.guanggao2,R.drawable.guanggao3};//装imagview图片id的数组
     private Context context;
-    private LinearLayout firstPointGroup;//装载指示点的集合
-    private View v;
+    private View v;//fragment的布局
     protected int lastPosition;//上一个页面的位置
     private boolean isRunning = true;//判断是否自动滚动
-    public static final int SCROLL_BINNER=1;//自动滚动消息的what
-    private static final int REFRESH_FIRST_BINNER = 2;//更新第一个位置的广告的
+
 
     //我的钱包，我的订单等8个按钮
     private LinearLayout myWalletll;
@@ -86,35 +109,76 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
-                case SCROLL_BINNER:
+                case SCROLL__FIRST_BINNER:
                     //让viewPager 滑动到下一页
-                    firstViewPager.setCurrentItem(firstViewPager.getCurrentItem()+1);
-                    handler.sendEmptyMessageDelayed(SCROLL_BINNER, 2000);
+                    if(firstImageViews.size()>1){
+                        firstViewPager.setCurrentItem(firstViewPager.getCurrentItem() + 1);
+                        handler.sendEmptyMessageDelayed(SCROLL__FIRST_BINNER, 2000);
+                    }
                     //Log.d(tag, "接收定时消息");
                     break;
                 case REFRESH_FIRST_BINNER://更新首页第一个广告位置的广告
+                    //firstPointGroup = (LinearLayout) v.findViewById(R.id.ll_point_group_first);
                     //指示点的初始化
-                    firstPointGroup = (LinearLayout) v.findViewById(R.id.ll_point_group);
-                    for(int i=0;i<imageViews.size();i++){
-                        //添加指示点
-                        ImageView point =new ImageView(context);
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                        params.rightMargin = 30;
-                        point.setLayoutParams(params);
-                        point.setBackgroundResource(R.drawable.point);
-                        if(i==0){
-                            point.setEnabled(true);
-                        }else{
-                            point.setEnabled(false);
-                        }
-                        firstPointGroup.addView(point);
-                    }
+                    initPoint(firstPointGroup,firstImageViews.size());
                     firstViewPager.setCurrentItem(Integer.MAX_VALUE / 2 - 1);
-                    firstViewPager.setAdapter(new MyPagerAdapter(imageViews));
+                    firstViewPager.setAdapter(new MyPagerAdapter(firstImageViews));
                     break;
+                case SCROLL__SECOND_BINNER:
+                    //让viewPager 滑动到下一页
+                    if(secondImageViews.size()>1){
+                        secondViewPager.setCurrentItem(secondViewPager.getCurrentItem()+1);
+                        handler.sendEmptyMessageDelayed(SCROLL__SECOND_BINNER, 2000);
+                    }
 
+                    //Log.d(tag, "接收定时消息");
+                    break;
+                case REFRESH_SECOND_BINNER://更新首页第二个广告位置的广告
+                    //secondPointGroup = (LinearLayout) v.findViewById(R.id.ll_point_group_second);
+                    //指示点的初始化
+                    initPoint(secondPointGroup,secondImageViews.size());
+                    secondViewPager.setCurrentItem(Integer.MAX_VALUE / 2 - 1);
+                    secondViewPager.setAdapter(new MyPagerAdapter(secondImageViews));
+                    break;
+                case SCROLL__THREE_BINNER:
+                    //让viewPager 滑动到下一页
+                    if(threeImageViews.size()>1){
+                        threeViewPager.setCurrentItem(threeViewPager.getCurrentItem()+1);
+                        handler.sendEmptyMessageDelayed(SCROLL__THREE_BINNER, 2000);
+                    }
+                    //Log.d(tag, "接收定时消息");
+                    break;
+                case REFRESH_THREE_BINNER://更新首页第三个广告位置的广告
+                    //threePointGroup = (LinearLayout) v.findViewById(R.id.ll_point_group_three);
+                    //指示点的初始化
+                    initPoint(threePointGroup,threeImageViews.size());
+                    threeViewPager.setCurrentItem(Integer.MAX_VALUE / 2 - 1);
+                    threeViewPager.setAdapter(new MyPagerAdapter(threeImageViews));
+                    break;
             }
+        }
+    }
+
+    /**
+     * 初始化指示点
+     * @param pointGroup 装指示点的layout
+     * @param size 指示点的数量
+     */
+    private void initPoint(LinearLayout pointGroup,int size) {
+        for(int i=0;i< size;i++){
+            //添加指示点
+            ImageView point =new ImageView(context);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.rightMargin = 30;
+            point.setLayoutParams(params);
+            point.setBackgroundResource(R.drawable.point);
+            if(i==0){
+                point.setEnabled(true);
+            }else{
+                point.setEnabled(false);
+            }
+            pointGroup.addView(point);
         }
     }
 
@@ -132,49 +196,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
      */
     private void initView() {
         requestQueue= MyApplication.getRequestQueue();
+        firstPointGroup = (LinearLayout) v.findViewById(R.id.ll_point_group_first);
+        secondPointGroup = (LinearLayout) v.findViewById(R.id.ll_point_group_second);
+        threePointGroup = (LinearLayout) v.findViewById(R.id.ll_point_group_three);
+
+        //-----------------第一个广告的初始化动作-----------------------------------
         firstViewPager = (ViewPager) v.findViewById(R.id.viewpager_binner_first);
-        imageViews=new ArrayList<View>();
+        firstImageViews =new ArrayList<View>();
         String binnerUrl="http://www.zmobuy.com/PHP/index.php?url=/home/data";
         StringRequest binnerOneRequest=new StringRequest(Request.Method.GET, binnerUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                MyLog.d(tag, "广告位的:" + s);
-                final List<Binner> binners=new ArrayList<Binner>();
-                try {
-                    JSONObject jsonObject1=new JSONObject(s);
-                    JSONObject jsonObject2=jsonObject1.getJSONObject("data");
-                    JSONArray jsonArray=jsonObject2.getJSONArray("player");
-                    for(int i=0;i<jsonArray.length();i++){
-                        JSONObject jsonObject=jsonArray.getJSONObject(i);
-                        Binner binner=new Binner(jsonObject.getString("id"),jsonObject.getString("photo"));
-                        if("7".equals(binner.getId())||"6".equals(binner.getId())){
-                            binners.add(binner);
-                        }
-                    }
-                    new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                for(final Binner binner:binners){
-                                    ImageView imageView=new ImageView(context);
-                                    URL url= null;
-                                    try {
-                                        url = new URL(binner.getImg());
-                                        HttpURLConnection conn= (HttpURLConnection) url.openConnection();
-                                        Bitmap bitmap= BitmapFactory.decodeStream(conn.getInputStream());
-                                        imageView.setImageBitmap(bitmap);
-                                        imageViews.add(imageView);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                handler.sendEmptyMessage(REFRESH_FIRST_BINNER);
-                                handler.sendEmptyMessage(SCROLL_BINNER);
-                            }
-                        }).start();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                getBinnerImageFromIntenet(s,FIRST_BINNER_FLAG,firstImageViews,REFRESH_FIRST_BINNER,SCROLL__FIRST_BINNER);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -183,74 +216,49 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
         });
         requestQueue.add(binnerOneRequest);//加入到队列
+        firstViewPager.addOnPageChangeListener(new MyPageChangeListener(firstImageViews, firstPointGroup));
+        firstViewPager.setOnTouchListener(new MyPageTouchListener(SCROLL__FIRST_BINNER,firstViewPager));
 
-        firstViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+        //--------------第二个广告的初始化----------------------------------------------
+
+        secondViewPager = (ViewPager) v.findViewById(R.id.viewpager_binner_second);
+        secondImageViews =new ArrayList<View>();
+        String secondBinnerUrl="http://www.zmobuy.com/PHP/index.php?url=/home/data";
+        StringRequest binnerSecondRequest=new StringRequest(Request.Method.GET, binnerUrl, new Response.Listener<String>() {
             @Override
-            /**
-             * 页面切换后调用
-             * position  新的页面位置
-             */
-            public void onPageSelected(int position) {
-                position = position % imageViews.size();
-                //改变指示点的状态
-                //把当前点enbale 为true
-                firstPointGroup.getChildAt(position).setEnabled(true);
-                //把上一个点设为false
-                firstPointGroup.getChildAt(lastPosition).setEnabled(false);
-                lastPosition = position;
+            public void onResponse(String s) {
+                getBinnerImageFromIntenet(s,SECOND_BINNER_FLAG,secondImageViews,REFRESH_SECOND_BINNER,SCROLL__SECOND_BINNER);
             }
-
+        }, new Response.ErrorListener() {
             @Override
-            /**
-             * 页面正在滑动的时候，回调
-             */
-            public void onPageScrolled(int position, float positionOffset,
-                                       int positionOffsetPixels) {
-            }
-
-            @Override
-            /**
-             * 当页面状态发生变化的时候，回调
-             */
-            public void onPageScrollStateChanged(int state) {
+            public void onErrorResponse(VolleyError volleyError) {
 
             }
         });
+        requestQueue.add(binnerSecondRequest);//加入到队列
+        secondViewPager.addOnPageChangeListener(new MyPageChangeListener(secondImageViews, secondPointGroup));
+        secondViewPager.setOnTouchListener(new MyPageTouchListener(SCROLL__SECOND_BINNER,secondViewPager));
 
-        firstViewPager.setOnTouchListener(new View.OnTouchListener() {
+
+        //---------------------------------第三个广告的初始化-------------------------------------
+        threeViewPager = (ViewPager) v.findViewById(R.id.viewpager_binner_three);
+        threeImageViews =new ArrayList<View>();
+        String threebinnerUrl="http://www.zmobuy.com/PHP/index.php?url=/home/data";
+        StringRequest binnerThreeRequest=new StringRequest(Request.Method.GET, binnerUrl, new Response.Listener<String>() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                float firstX = 0;//手指按下时的x值
-                float firstY = 0;
-                float distance=0f;
-                boolean isStoped=false;
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        firstX = event.getX();
-                        firstY = event.getY();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        float lastX = event.getX();
-                        float lastY = event.getY();
-                        distance = (float) Math.sqrt((lastX - firstX) * (lastX - firstX) +
-                                (lastY - firstY) * (lastY - firstY));
-                        if (distance > 10) {
-                            handler.removeMessages(SCROLL_BINNER);//暂停轮播
-                            isStoped=true;
-                        }
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        if(isStoped){
-                            handler.sendEmptyMessageDelayed(SCROLL_BINNER, 2000);//重新开始轮播
-                        }else { //这种情况下属于点击事件
-                            Toast.makeText(context, "" + firstViewPager.getCurrentItem(),Toast.LENGTH_SHORT).show();
-                        }
-                        break;
-                }
-                return false;//这里必须返回false，否则viewpager的ontouchenevnt接收不到事件
+            public void onResponse(String s) {
+                getBinnerImageFromIntenet(s,THREE_BINNER_FLAG,threeImageViews,REFRESH_THREE_BINNER,SCROLL__THREE_BINNER);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
             }
         });
-
+        requestQueue.add(binnerThreeRequest);//加入到队列
+        threeViewPager.addOnPageChangeListener(new MyPageChangeListener(threeImageViews,threePointGroup));
+        threeViewPager.setOnTouchListener(new MyPageTouchListener(SCROLL__THREE_BINNER,threeViewPager));
 
 
 
@@ -386,6 +394,69 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     }
 
     /**
+     * 从网络获取广告图片
+     * @param s 从网络返回的json数据
+     * @param binnerPositionFlag 广告的位置，是最上面的，还是中间的，还是最下面的
+     * @param imageViews 将广告图片添加到的view的集合
+     * @param refreshFlag 需要刷新的view的消息标记
+     * @param scrollFlag 需要滚动的view的标记
+     */
+    private void getBinnerImageFromIntenet(String s,int binnerPositionFlag, final List<View> imageViews, final int refreshFlag, final int scrollFlag) {
+        MyLog.d(tag, "广告位的:" + s);
+        final List<Binner> binners=new ArrayList<Binner>();
+        try {
+            JSONObject jsonObject1=new JSONObject(s);
+            JSONObject jsonObject2=jsonObject1.getJSONObject("data");
+            JSONArray jsonArray=jsonObject2.getJSONArray("player");
+            for(int i=0;i<jsonArray.length();i++){
+                JSONObject jsonObject=jsonArray.getJSONObject(i);
+                Binner binner=new Binner(jsonObject.getString("id"),jsonObject.getString("photo"));
+                switch (binnerPositionFlag){
+                    case FIRST_BINNER_FLAG:
+                        if("7".equals(binner.getId())||"6".equals(binner.getId())){
+                            binners.add(binner);
+                        }
+                        break;
+                    case SECOND_BINNER_FLAG:
+                        if("2".equals(binner.getId())){
+                            binners.add(binner);
+                        }
+                        break;
+                    case THREE_BINNER_FLAG:
+                        if("16".equals(binner.getId())){
+                            binners.add(binner);
+                        }
+                        break;
+                }
+
+            }
+            new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for(final Binner binner:binners){
+                            ImageView imageView=new ImageView(context);
+                            URL url= null;
+                            try {
+                                url = new URL(binner.getImg());
+                                HttpURLConnection conn= (HttpURLConnection) url.openConnection();
+                                Bitmap bitmap= BitmapFactory.decodeStream(conn.getInputStream());
+                                imageView.setImageBitmap(bitmap);
+                                imageViews.add(imageView);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        handler.sendEmptyMessage(refreshFlag);
+                        handler.sendEmptyMessage(scrollFlag);
+                    }
+                }).start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * 从good集合里面取出前面n个元素
      *
      */
@@ -432,7 +503,102 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onStop() {
         super.onStop();
-        handler.removeMessages(SCROLL_BINNER);
+        handler.removeMessages(SCROLL__FIRST_BINNER);
+    }
+
+
+    /**
+     * 广告viewpager的滚动监听器
+     */
+    public class MyPageChangeListener implements ViewPager.OnPageChangeListener{
+        private List<View> imageViews;
+        private LinearLayout pointGroup;
+        private int lastPosition;
+
+        public MyPageChangeListener(List<View> imageViews, LinearLayout pointGroup) {
+            this.imageViews = imageViews;
+            this.pointGroup = pointGroup;
+        }
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        /**
+         * 页面切换后调用
+         * position  新的页面位置
+         */
+        public void onPageSelected(int position) {
+            position = position % imageViews.size();
+            //改变指示点的状态
+            //把当前点enbale 为true
+            if(imageViews.size()>1){
+                pointGroup.getChildAt(position).setEnabled(true);
+                //把上一个点设为false
+                pointGroup.getChildAt(lastPosition).setEnabled(false);
+                lastPosition = position;
+            }
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    }
+
+
+    /**
+     * 广告viewpager的触摸监听器
+     */
+    public class MyPageTouchListener implements View.OnTouchListener{
+        private boolean isStoped = false;
+        private int scrollFlag;
+        private ViewPager viewPager;
+
+        /**
+         *
+         * @param scrollFlag 向handler里面发送消息的标记
+         * @param viewPager
+         */
+        public MyPageTouchListener(int scrollFlag, ViewPager viewPager) {
+            this.scrollFlag = scrollFlag;
+            this.viewPager = viewPager;
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            float firstX = 0;//手指按下时的x值
+            float firstY = 0;
+            float distance = 0f;
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    firstX = event.getX();
+                    firstY = event.getY();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    float lastX = event.getX();
+                    float lastY = event.getY();
+                    distance = (float) Math.sqrt((lastX - firstX) * (lastX - firstX) +
+                            (lastY - firstY) * (lastY - firstY));
+                    if (distance > 10) {
+                        handler.removeMessages(scrollFlag);//暂停轮播
+                        isStoped = true;
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if (isStoped) {
+                        handler.sendEmptyMessageDelayed(scrollFlag, 2000);//重新开始轮播
+                        isStoped=false;
+                    } else { //这种情况下属于点击事件
+                        Toast.makeText(context, "" + viewPager.getCurrentItem(), Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+            }
+            return false;//这里必须返回false，否则viewpager的ontouchenevnt接收不到事件
+        }
     }
 
     /**
@@ -468,6 +634,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
          * 获得页面的总数
          */
         public int getCount() {
+            if(imageViews.size()==1){
+                return 1;
+            }
             return Integer.MAX_VALUE;
         }
 
@@ -507,7 +676,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
          * 销毁对应位置上的object
          */
         public void destroyItem(ViewGroup container, int position, Object object) {
-            //container.removeView(imageViews.get(position % imageViews.size()));
+            //container.removeView(firstImageViews.get(position % firstImageViews.size()));
         }
     }
 }
