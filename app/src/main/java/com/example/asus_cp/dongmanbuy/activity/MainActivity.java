@@ -64,6 +64,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private SlidingMenu slidingMenu;
 
+    //侧滑菜单
+    private ImageView loginImage;//登录按钮
+    private TextView myZhuYeTextView;//我的主页
+    private TextView myOrderTextView;//我的订单
+    private TextView myWalletTextView;//我的钱包
+    private TextView myShouCangTextView;//我的收藏
+    private TextView guanZhuDianPuTextView;//关注店铺
+    private TextView shipAddressTextView;//收货地址
+    private TextView changPassWordTextView;//修改密码
+    private TextView setTingTextView;//设置
+
+
     private String tag="MainActivity";
 
 
@@ -227,6 +239,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         slidingMenu= (SlidingMenu) findViewById(R.id.id_menu);
 
+
+        //-----------------------初始化侧滑菜单-----------------------------
+        loginImage= (ImageView) findViewById(R.id.img_login);
+        myZhuYeTextView= (TextView) findViewById(R.id.text_my_zhu_ye);
+        myOrderTextView= (TextView) findViewById(R.id.text_my_order);
+        myWalletTextView= (TextView) findViewById(R.id.text_my_wallet);
+        myShouCangTextView= (TextView) findViewById(R.id.text_my_shou_cang);
+        guanZhuDianPuTextView= (TextView) findViewById(R.id.text_guan_zhu_dian_pu);
+        shipAddressTextView= (TextView) findViewById(R.id.text_ship_addres);
+        changPassWordTextView= (TextView) findViewById(R.id.text_change_password);
+        setTingTextView= (TextView) findViewById(R.id.text_setting);
+
+        loginImage.setOnClickListener(this);
+        myZhuYeTextView.setOnClickListener(this);
+        myOrderTextView.setOnClickListener(this);
+        myWalletTextView.setOnClickListener(this);
+        myShouCangTextView.setOnClickListener(this);
+        guanZhuDianPuTextView.setOnClickListener(this);
+        shipAddressTextView.setOnClickListener(this);
+        changPassWordTextView.setOnClickListener(this);
+        setTingTextView.setOnClickListener(this);
+
+
     }
 
     /**
@@ -298,7 +333,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this,"点击了扫一扫",Toast.LENGTH_SHORT).show();
                 messageAndSao.setVisibility(View.GONE);
                 break;
-
+            case R.id.img_login:
+                Toast.makeText(this,"点击了登录",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.text_my_zhu_ye:
+                Toast.makeText(this,"点击了我的主页",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.text_my_order:
+                Toast.makeText(this,"点击了我的菜单",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.text_my_wallet:
+                Toast.makeText(this,"点击了我的钱包",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.text_my_shou_cang:
+                Toast.makeText(this,"点击了我的收藏",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.text_guan_zhu_dian_pu:
+                Toast.makeText(this,"点击了关注店铺",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.text_ship_addres:
+                Toast.makeText(this,"点击了收货地址",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.text_change_password:
+                Toast.makeText(this,"点击了修改密码",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.text_setting:
+                Toast.makeText(this,"点击了设置",Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 

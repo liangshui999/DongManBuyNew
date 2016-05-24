@@ -29,4 +29,7 @@
     <string name="guan_zhu_dian_pu">关注店铺</string>
     <string name="change_password">修改密码</string>
     <string name="setting">设置</string>
+    <string name="shop_street_content">精品店铺一条街</string>
+    <string name="cai_ni_xi_huan">猜你喜欢</string>
+    <string name="ban_quan">"@2016ZMOBUY周末(zmobuy.com)版权所有，并保留所有权利"</string>
 </resources>

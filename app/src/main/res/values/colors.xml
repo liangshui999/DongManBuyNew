@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="bottom_lable_color">#ff5153</color>
     <color name="gray">#F0F0F0</color>
+    <color name="home_fragment_background">#CCE8CF</color>
+    <color name="white_my">#ffffff</color>
 </resources>

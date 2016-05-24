@@ -9,7 +9,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/home_fragment_background">
             <!--第一个广告条和指示点-->
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -17,8 +18,8 @@
                 android:orientation="vertical">
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewpager_binner_first"
-                    android:layout_width="wrap_content"
-                    android:layout_height="160dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
                 </android.support.v4.view.ViewPager>
 
                 <LinearLayout
@@ -31,15 +32,17 @@
                 </LinearLayout>
             </RelativeLayout>
 
-
+            <!--白色背景-->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/white_my"/>
             <!--我的钱包，我的订单8个图标-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="30dp">
+                android:background="@android:color/white">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -218,35 +221,66 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:background="@android:color/white">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/xian_shi_miao_sha"
                     android:textSize="18sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:textColor="@color/bottom_lable_color"
+                    android:layout_marginLeft="10dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/miao_sha_time"
                     android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:id="@+id/text_xian_shi_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/more"
+                    android:layout_marginLeft="160dp"
+                    android:text="@string/more"
+                    android:clickable="true"/>
             </LinearLayout>
 
             <!--限时秒杀的列表展示-->
-            <com.example.asus_cp.dongmanbuy.customview.MyGridView
-                android:layout_marginTop="10dp"
-                android:id="@+id/grid_view_xian_shi_miao_sha"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnWidth="150dp"
-                android:numColumns="auto_fit"
-                android:verticalSpacing="10dp"
-                android:horizontalSpacing="10dp"
-                android:stretchMode="columnWidth"
-                android:gravity="center"
-                >
-            </com.example.asus_cp.dongmanbuy.customview.MyGridView>
+                android:background="@color/white_my"
+                android:layout_marginTop="5dp">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:id="@+id/img_xian_shi_miao_sha_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_weight="1">
+                    <com.example.asus_cp.dongmanbuy.customview.MyGridView
+                        android:id="@+id/grid_view_xian_shi_miao_sha"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:columnWidth="85dp"
+                        android:numColumns="auto_fit"
+                        android:verticalSpacing="@dimen/grid_view_space"
+                        android:horizontalSpacing="@dimen/grid_view_space"
+                        android:stretchMode="columnWidth"
+                        android:gravity="center"
+                        >
+                    </com.example.asus_cp.dongmanbuy.customview.MyGridView>
+                </LinearLayout>
+            </LinearLayout>
+
 
             <!--第二个广告条和指示点-->
             <RelativeLayout
@@ -255,8 +289,8 @@
                 android:orientation="vertical">
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewpager_binner_second"
-                    android:layout_width="wrap_content"
-                    android:layout_height="160dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp">
                 </android.support.v4.view.ViewPager>
 
                 <LinearLayout
@@ -264,6 +298,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/viewpager_binner_second"
+                    android:layout_above="@id/viewpager_binner_second"
                     android:layout_centerInParent="true"
                     android:orientation="horizontal">
                 </LinearLayout>
@@ -274,12 +309,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:background="@android:color/white">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/jing_pin_tui_jian"
+                    android:layout_marginLeft="10dp"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
                 <TextView
@@ -287,18 +323,50 @@
                     android:layout_height="wrap_content"
                     android:text="@string/jing_ping_tui_jian_content"
                     android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:id="@+id/text_jing_pin_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/more"
+                    android:layout_marginLeft="60dp"
+                    android:clickable="true"
+                    android:text="@string/more"/>
             </LinearLayout>
 
             <!--精品推荐的列表展示-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white_my">
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager_jing_pin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp">
+                </android.support.v4.view.ViewPager>
+
+                <LinearLayout
+                    android:id="@+id/ll_point_group_jing_pin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/viewpager_jing_pin"
+                    android:layout_centerInParent="true"
+                    android:orientation="horizontal">
+                </LinearLayout>
+            </RelativeLayout>
+
             <com.example.asus_cp.dongmanbuy.customview.MyGridView
+                android:visibility="gone"
                 android:layout_marginTop="10dp"
                 android:id="@+id/grid_view_jing_pin_tui_jian"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnWidth="150dp"
+                android:columnWidth="100dp"
                 android:numColumns="auto_fit"
-                android:verticalSpacing="10dp"
-                android:horizontalSpacing="10dp"
+                android:verticalSpacing="@dimen/grid_view_space"
+                android:horizontalSpacing="@dimen/grid_view_space"
                 android:stretchMode="columnWidth"
                 android:gravity="center"
                 >
@@ -308,11 +376,12 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewpager_binner_three"
                     android:layout_width="wrap_content"
-                    android:layout_height="160dp">
+                    android:layout_height="120dp">
                 </android.support.v4.view.ViewPager>
 
                 <LinearLayout
@@ -320,10 +389,104 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/viewpager_binner_three"
+                    android:layout_above="@id/viewpager_binner_three"
                     android:layout_centerInParent="true"
                     android:orientation="horizontal">
                 </LinearLayout>
             </RelativeLayout>
+
+            <!--店铺街的标题，更多-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@android:color/white"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/shop_street"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/shop_street_content"
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:id="@+id/text_dian_pu_jie_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/more"
+                    android:layout_marginLeft="160dp"
+                    android:clickable="true"
+                    android:text="@string/more"/>
+
+            </LinearLayout>
+
+            <!--店铺街的内容-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white_my">
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager_shop_street"
+                    android:layout_width="wrap_content"
+                    android:layout_height="160dp">
+                </android.support.v4.view.ViewPager>
+
+                <LinearLayout
+                    android:id="@+id/ll_point_group_shop_street"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/viewpager_shop_street"
+                    android:layout_centerInParent="true"
+                    android:orientation="horizontal">
+                </LinearLayout>
+            </RelativeLayout>
+
+            <!--猜你喜欢的标题-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/home_fragment_background">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/cai_ni_xi_huan"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
+
+            <!--猜你喜欢的内容-->
+            <com.example.asus_cp.dongmanbuy.customview.MyGridView
+                android:layout_marginTop="10dp"
+                android:id="@+id/grid_view_cai_ni_xi_huan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="2"
+                android:gravity="center"
+                android:background="@color/white_my"
+                >
+            </com.example.asus_cp.dongmanbuy.customview.MyGridView>
+
+            <!--版权所有部分的内容-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ban_quan"
+                    android:textSize="18sp"
+                    android:layout_margin="20dp"/>
+            </LinearLayout>
+
         </LinearLayout>
     </com.example.asus_cp.dongmanbuy.customview.MyScrollView>
 

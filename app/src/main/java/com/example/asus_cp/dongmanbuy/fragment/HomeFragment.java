@@ -10,14 +10,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -26,6 +29,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.asus_cp.dongmanbuy.R;
+import com.example.asus_cp.dongmanbuy.adapter.CaiNiXiHuanAdapter;
 import com.example.asus_cp.dongmanbuy.adapter.JingPinAdapter;
 import com.example.asus_cp.dongmanbuy.adapter.XianShiAdapter;
 import com.example.asus_cp.dongmanbuy.customview.MyGridView;
@@ -39,6 +43,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -55,23 +60,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private LinearLayout firstPointGroup;
     public static final int SCROLL__FIRST_BINNER =1;//自动滚动消息的what
     public static final int REFRESH_FIRST_BINNER = 2;//更新第一个位置的广告的
-    private static final int FIRST_BINNER_FLAG =1 ;//第一幅广告的标记
+    private static final int FIRST_BINNER_FLAG =3 ;//第一幅广告的标记
     private List<View> firstImageViews;//装载imageview的集合
 
     //第二个广告条
     private ViewPager secondViewPager;
     private LinearLayout secondPointGroup;
-    public static final int SCROLL__SECOND_BINNER =3;//自动滚动消息的what
-    public static final int REFRESH_SECOND_BINNER = 4;//更新第一个位置的广告的
-    private static final int SECOND_BINNER_FLAG =2 ;//第二幅广告的标记
+    public static final int SCROLL__SECOND_BINNER =4;//自动滚动消息的what
+    public static final int REFRESH_SECOND_BINNER = 5;//更新第一个位置的广告的
+    private static final int SECOND_BINNER_FLAG =6 ;//第二幅广告的标记
     private List<View> secondImageViews;//装载imageview的集合
 
     //第三个广告条
     private ViewPager threeViewPager;
     private LinearLayout threePointGroup;
-    public static final int SCROLL__THREE_BINNER =5;//自动滚动消息的what
-    public static final int REFRESH_THREE_BINNER = 6;//更新第一个位置的广告的
-    private static final int THREE_BINNER_FLAG =3 ;//第三幅广告的标记
+    public static final int SCROLL__THREE_BINNER =7;//自动滚动消息的what
+    public static final int REFRESH_THREE_BINNER = 8;//更新第一个位置的广告的
+    private static final int THREE_BINNER_FLAG =9 ;//第三幅广告的标记
     private List<View> threeImageViews;//装载imageview的集合
 
 
@@ -95,9 +100,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     //限时秒杀的gridview
     private MyGridView xianShiMiaoShaGridView;
+    private ImageView xianShiMiaoShaImagView;
+    public static final int REFRESH_XIAN_SHI_MIAO_SHA=10;
 
     //精品推荐的gridview
     private MyGridView jingPinTuiJianGridview;
+
+    //猜你喜欢的gridview
+    private MyGridView caiNiXiHuanGridView;
+
+    //更多按钮
+    private TextView xianShiMoreTextView;
+    private TextView jingPinMoreTextView;
+    private TextView dianPuJieMoreTextView;
 
     private JsonHelper jsonHelper;//json解析的帮助类
 
@@ -154,6 +169,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     initPoint(threePointGroup,threeImageViews.size());
                     threeViewPager.setCurrentItem(Integer.MAX_VALUE / 2 - 1);
                     threeViewPager.setAdapter(new MyPagerAdapter(threeImageViews));
+                    break;
+                case REFRESH_XIAN_SHI_MIAO_SHA://更新限时秒杀
+                    Bitmap bitmap= (Bitmap) msg.obj;
+                    xianShiMiaoShaImagView.setImageBitmap(bitmap);
                     break;
             }
         }
@@ -262,7 +281,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
 
 
-        //初始化我的钱包，我的按钮等8个组件
+        //-----------初始化我的钱包，我的按钮等8个组件-------------------
         myWalletll= (LinearLayout) v.findViewById(R.id.ll_my_wallet);
         myOrderll= (LinearLayout) v.findViewById(R.id.ll_my_order);
         browseHistoryll= (LinearLayout) v.findViewById(R.id.ll_browse_history);
@@ -285,7 +304,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         jsonHelper=new JsonHelper();
 
 
-        //访问接口的限时秒杀
+        //-----------------------限时秒杀部分---------------------------------
         String shanShiUrl="http://www.zmobuy.com/PHP/index.php?url=/home/grab";
         StringRequest xianShiStringRequest=new StringRequest(Request.Method.GET, shanShiUrl, new Response.Listener<String>() {
             @Override
@@ -311,6 +330,31 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                         good.setGoodsNumber(js.getString("goods_number"));
                         goods.add(good);
                     }
+                    xianShiMiaoShaImagView= (ImageView) v.findViewById(R.id.img_xian_shi_miao_sha_content);
+                    final String urlString=goods.get(0).getGoodsImg();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            HttpURLConnection conn=null;
+                            try {
+                                URL url=new URL(urlString);
+                                conn= (HttpURLConnection) url.openConnection();
+                                InputStream in=conn.getInputStream();
+                                Bitmap bitmap=BitmapFactory.decodeStream(in);
+                                Message message=handler.obtainMessage(REFRESH_XIAN_SHI_MIAO_SHA);
+                                message.obj=bitmap;
+                                handler.sendMessage(message);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }finally {
+                                if(conn!=null){
+                                    conn.disconnect();
+                                }
+                            }
+
+                        }
+                    }).start();
+
                     //限时秒杀的gridview
                     xianShiMiaoShaGridView = (MyGridView) v.findViewById(R.id.grid_view_xian_shi_miao_sha);
                     if (goods.size() > 0) {
@@ -331,57 +375,51 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         requestQueue.add(xianShiStringRequest);
 
 
-        //精品推荐的异步加载
+
+        //----------------------用viewpager做的精品推荐部分-----------------------
+        final ViewPager jingPinViewPager= (ViewPager) v.findViewById(R.id.viewpager_jing_pin);
+        final List<View> gridViews=new ArrayList<View>();
         String jingPinRequestUrl="http://www.zmobuy.com/PHP/index.php?url=/home/bestgoods";
         StringRequest jingPinStringRequest=new StringRequest(Request.Method.GET, jingPinRequestUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                List<Good> goods = new ArrayList<Good>();
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        Good good = new Good();
-                        JSONObject js = jsonArray.getJSONObject(i);
-                        good.setGoodId(js.getString("goods_id"));
-                        good.setUserId(js.getString("user_id"));
-                        good.setGoodName(JsonHelper.decodeUnicode(js.getString("goods_name")));
-                        good.setWarehousePrice(js.getString("warehouse_price"));
-                        good.setWarehousePromotePrice(js.getString("warehouse_promote_price"));
-                        good.setRegionPrice(js.getString("region_price"));
-                        good.setPromotePrice(js.getString("region_promote_price"));
-                        good.setModel_price(js.getString("model_price"));
-                        good.setModel_attr(js.getString("model_attr"));
-                        good.setGoods_name_style(js.getString("goods_name_style"));
-                        good.setCommentsNumber(js.getString("comments_number"));
-                        good.setSalesVolume(js.getString("sales_volume"));
-                        good.setMarket_price(js.getString("market_price"));
-                        good.setIsNew(js.getString("is_new"));
-                        good.setIsBest(js.getString("is_best"));
-                        good.setIsHot(js.getString("is_hot"));
-                        good.setGoodsNumber(js.getString("goods_number"));
-                        good.setOrgPrice(js.getString("org_price"));
-                        good.setShopPrice(JsonHelper.decodeUnicode(js.getString("shop_price")));
-                        good.setPromotePrice(JsonHelper.decodeUnicode(js.getString("promote_price")));
-                        good.setGoodType(js.getString("goods_type"));
-                        good.setPromoteStartDate(js.getString("promote_start_date"));
-                        good.setPromoteEndDate(js.getString("promote_end_date"));
-                        good.setIsPromote(js.getString("is_promote"));
-                        good.setGoodsBrief(js.getString("goods_brief"));
-                        good.setGoodsThumb(js.getString("goods_thumb"));
-                        good.setGoodsImg(js.getString("goods_img"));
-                        goods.add(good);
-                    }
-                    //精品推荐的gridview
-                    jingPinTuiJianGridview = (MyGridView) v.findViewById(R.id.grid_view_jing_pin_tui_jian);
-                    if (goods.size() > 0) {
-                        JingPinAdapter jingPinAdapter = new JingPinAdapter(context, getElementsFromList(goods, 4));
-                        jingPinTuiJianGridview.setAdapter(jingPinAdapter);
-                        jingPinTuiJianGridview.setOnItemClickListener(new JingPinOnItemClickListener());
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                List<Good> goods = parseCaiNiLikeAndJingPin(s);
+               // Good[] goodArray= (Good[]) goods.toArray();
+                int size=goods.size();
+                int count=0;//取的次数
+                if(size%3==0){
+                    count=size;
+                }else{
+                    count=size/3+1;
                 }
+                for(int i=0;i<count;i++){
+                    List<Good> goodItems=new ArrayList<Good>();
+                    for(int j=3*i;j<3*i+3;j++){
+                        if(j<size){
+                            goodItems.add(goods.get(j));
+                        }
+                    }
+                    JingPinAdapter jingPinAdapter=new JingPinAdapter(context,goodItems);
+                    MyGridView gridView=new MyGridView(context);
+                    gridView.setColumnWidth(230);
+                    gridView.setHorizontalSpacing(5);
+                    gridView.setVerticalSpacing(5);
+                    gridView.setGravity(Gravity.CENTER);
+                    gridView.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
+                    gridView.setNumColumns(GridView.AUTO_FIT);
+                    gridView.setAdapter(jingPinAdapter);
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Toast.makeText(context,""+position,Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    gridViews.add(gridView);
+                }
+                jingPinViewPager.setAdapter(new MyPagerAdapter(gridViews));
+                LinearLayout jingPinPointGroup= (LinearLayout) v.findViewById(R.id.ll_point_group_jing_pin);
+                initPoint(jingPinPointGroup,gridViews.size());
+                jingPinViewPager.addOnPageChangeListener(new MyPageChangeListener(gridViews,jingPinPointGroup));
             }
         }, new Response.ErrorListener() {
             @Override
@@ -391,7 +429,114 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         });
         requestQueue.add(jingPinStringRequest);
 
+
+        //-----------------------精品推荐部分---------------------------------
+        /*String jingPinRequestUrl="http://www.zmobuy.com/PHP/index.php?url=/home/bestgoods";
+        StringRequest jingPinStringRequest=new StringRequest(Request.Method.GET, jingPinRequestUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                List<Good> goods = parseCaiNiLikeAndJingPin(s);
+                    //精品推荐的gridview
+                jingPinTuiJianGridview = (MyGridView) v.findViewById(R.id.grid_view_jing_pin_tui_jian);
+                if (goods.size() > 0) {
+                    JingPinAdapter jingPinAdapter = new JingPinAdapter(context, getElementsFromList(goods, 3));
+                    jingPinTuiJianGridview.setAdapter(jingPinAdapter);
+                    jingPinTuiJianGridview.setOnItemClickListener(new JingPinOnItemClickListener());
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        });
+        requestQueue.add(jingPinStringRequest);*/
+
+
+        //-----------------------猜你喜欢部分---------------------------------
+        caiNiXiHuanGridView= (MyGridView) v.findViewById(R.id.grid_view_cai_ni_xi_huan);
+        String caiNiUrl="http://www.zmobuy.com/PHP/index.php?url=/home/hotgoods";
+        StringRequest caiNiXiHuanRequest=new StringRequest(Request.Method.GET, caiNiUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                MyLog.d(tag,"猜你喜欢部分"+s);
+                List<Good> goods=parseCaiNiLikeAndJingPin(s);
+                CaiNiXiHuanAdapter caiNiXiHuanAdapter=new CaiNiXiHuanAdapter(context,goods);
+                caiNiXiHuanGridView.setAdapter(caiNiXiHuanAdapter);
+                caiNiXiHuanGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Toast.makeText(context,""+position,Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        });
+        requestQueue.add(caiNiXiHuanRequest);
+
+        //3个更多按钮的初始化和点击事件
+        xianShiMoreTextView= (TextView) v.findViewById(R.id.text_xian_shi_more);
+        jingPinMoreTextView= (TextView) v.findViewById(R.id.text_jing_pin_more);
+        dianPuJieMoreTextView= (TextView) v.findViewById(R.id.text_dian_pu_jie_more);
+        xianShiMoreTextView.setOnClickListener(this);
+        jingPinMoreTextView.setOnClickListener(this);
+        dianPuJieMoreTextView.setOnClickListener(this);
     }
+
+
+    /**
+     * 猜你喜欢和精品推荐的json数据解析
+     */
+    public List<Good> parseCaiNiLikeAndJingPin(String s){
+        List<Good> goods = new ArrayList<Good>();
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = jsonObject.getJSONArray("data");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                Good good = new Good();
+                JSONObject js = jsonArray.getJSONObject(i);
+                good.setGoodId(js.getString("goods_id"));
+                good.setUserId(js.getString("user_id"));
+                good.setGoodName(JsonHelper.decodeUnicode(js.getString("goods_name")));
+                good.setWarehousePrice(js.getString("warehouse_price"));
+                good.setWarehousePromotePrice(js.getString("warehouse_promote_price"));
+                good.setRegionPrice(js.getString("region_price"));
+                good.setPromotePrice(js.getString("region_promote_price"));
+                good.setModel_price(js.getString("model_price"));
+                good.setModel_attr(js.getString("model_attr"));
+                good.setGoods_name_style(js.getString("goods_name_style"));
+                good.setCommentsNumber(js.getString("comments_number"));
+                good.setSalesVolume(js.getString("sales_volume"));
+                good.setMarket_price(js.getString("market_price"));
+                good.setIsNew(js.getString("is_new"));
+                good.setIsBest(js.getString("is_best"));
+                good.setIsHot(js.getString("is_hot"));
+                good.setGoodsNumber(js.getString("goods_number"));
+                good.setOrgPrice(js.getString("org_price"));
+                good.setShopPrice(JsonHelper.decodeUnicode(js.getString("shop_price")));
+                good.setPromotePrice(JsonHelper.decodeUnicode(js.getString("promote_price")));
+                good.setGoodType(js.getString("goods_type"));
+                good.setPromoteStartDate(js.getString("promote_start_date"));
+                good.setPromoteEndDate(js.getString("promote_end_date"));
+                good.setIsPromote(js.getString("is_promote"));
+                good.setGoodsBrief(js.getString("goods_brief"));
+                good.setGoodsThumb(js.getString("goods_thumb"));
+                good.setGoodsImg(js.getString("goods_img"));
+                goods.add(good);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return goods;
+    }
+
+
+
 
     /**
      * 从网络获取广告图片
@@ -462,7 +607,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
      */
     public List<Good> getElementsFromList(List<Good> goods, int num) {
         List<Good> list = new ArrayList<Good>();
-        for (int i = 0; i < num; i++) {
+        for (int i = 1; i < num; i++) {
             list.add(goods.get(i));
         }
         return list;
@@ -494,6 +639,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.ll_you_hui_huo_dong:
                 Toast.makeText(context, "点击了优惠活动", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.text_xian_shi_more://限时秒杀的更多按钮
+                Toast.makeText(context, "点击了限时秒杀更多", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.text_jing_pin_more://精品推荐的更多按钮
+                Toast.makeText(context, "点击了精品推荐更多", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.text_dian_pu_jie_more://店铺街的更多按钮
+                Toast.makeText(context, "点击了店铺街更多", Toast.LENGTH_SHORT).show();
                 break;
         }
 
