@@ -49,6 +49,7 @@ public class MaoRongFragment extends Fragment {
         maoRongs.add("公仔");
         ArrayAdapter arrayAdapter=new ArrayAdapter(context,R.layout.category_tong_yong_item_layout,maoRongs);
         maoRongListView.setAdapter(arrayAdapter);
+        maoRongListView.setDividerHeight(0);
         maoRongListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

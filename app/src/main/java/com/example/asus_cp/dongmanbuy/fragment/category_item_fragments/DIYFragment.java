@@ -51,6 +51,7 @@ public class DIYFragment extends Fragment{
         diys.add("木版画");
         ArrayAdapter arrayAdapter=new ArrayAdapter(context,R.layout.category_tong_yong_item_layout,diys);
         diyListView.setAdapter(arrayAdapter);
+        diyListView.setDividerHeight(0);
         diyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

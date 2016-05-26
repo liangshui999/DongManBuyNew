@@ -48,6 +48,7 @@ public class PeiShiFragment extends Fragment {
         peiShies.add("鞋子");
         ArrayAdapter arrayAdapter=new ArrayAdapter(context,R.layout.category_tong_yong_item_layout,peiShies);
         peiShiListView.setAdapter(arrayAdapter);
+        peiShiListView.setDividerHeight(0);
         peiShiListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

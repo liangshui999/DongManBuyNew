@@ -7,28 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.example.asus_cp.dongmanbuy.R;
-import com.example.asus_cp.dongmanbuy.adapter.CategoryGridViewAdapter;
 import com.example.asus_cp.dongmanbuy.customview.MyGridView;
-import com.example.asus_cp.dongmanbuy.model.CategoryModel;
-import com.example.asus_cp.dongmanbuy.model.Good;
-import com.example.asus_cp.dongmanbuy.util.JsonHelper;
+import com.example.asus_cp.dongmanbuy.util.CategoryImageLoadHelper;
 import com.example.asus_cp.dongmanbuy.util.MyApplication;
-import com.example.asus_cp.dongmanbuy.util.MyLog;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,10 +26,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 上装的具体内容
@@ -72,6 +54,7 @@ public class ShangZhuangFragment extends Fragment implements View.OnClickListene
 
     private String searchUrl="http://www.zmobuy.com/PHP/index.php?url=/search";//申请具体类别数据时的url，post请求
 
+    private CategoryImageLoadHelper helper;
 
     @Nullable
     @Override
@@ -86,6 +69,7 @@ public class ShangZhuangFragment extends Fragment implements View.OnClickListene
      */
     private void init() {
         context= MyApplication.getContext();
+        helper=new CategoryImageLoadHelper();
         requestQueue=MyApplication.getRequestQueue();
         //控件的初始化
         weiYiGridView= (MyGridView) v.findViewById(R.id.grid_view_wei_yi);
@@ -94,8 +78,16 @@ public class ShangZhuangFragment extends Fragment implements View.OnClickListene
         tXueGridView= (MyGridView) v.findViewById(R.id.grid_view_t_xue);
 
 
-        //---------------------卫衣部分-----------------------------------
-        asynLoadCatgory(weiYiGridView,"卫衣","20");
+        //卫衣部分
+        helper.asynLoadCatgory(weiYiGridView,"卫衣","9");
+        //针织衫部分
+        helper.asynLoadCatgory(zhenZhiShanGridView,"针织衫","6");
+        //外套部分
+        helper.asynLoadCatgory(waiTaoGridView,"外套","3");
+        //T恤部分
+        helper.asynLoadCatgory(tXueGridView,"T恤","3");
+
+
 
         weiYiTextView= (TextView) v.findViewById(R.id.text_wei_yi);
         zhenZhiShanTextView= (TextView) v.findViewById(R.id.text_zhen_zhi_shan);
@@ -108,94 +100,6 @@ public class ShangZhuangFragment extends Fragment implements View.OnClickListene
         tXueTextView.setOnClickListener(this);
     }
 
-
-    /**
-     * 给gridview异步加载数据
-     * @param gridView 需要异步加载图片的gridview
-     * @param cateGory 商品的类别
-     * @param length 需要加载的数据长度
-     */
-    private void asynLoadCatgory(GridView gridView, final String cateGory, final String length) {
-        StringRequest allRequest = new StringRequest(Request.Method.GET, getAllCategoryUrl, new Response.Listener<String>() {
-            private ArrayList<CategoryModel> categoryModels = new ArrayList<CategoryModel>();
-
-            @Override
-            public void onResponse(String s) {
-                // MyLog.d(tag,s);
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jObject = jsonArray.getJSONObject(i);
-                        CategoryModel categoryModel = new CategoryModel(jObject.getString("cat_id"),
-                                JsonHelper.decodeUnicode(jObject.getString("cat_name")));
-                        categoryModels.add(categoryModel);
-                    }
-
-                    String categoryId = null;
-                    for (CategoryModel model : categoryModels) {
-                        if (cateGory.equals(model.getCategoryName())) {
-                            categoryId = model.getCategoryId();
-                        }
-                    }
-                    //再发送一次post请求
-                    final String finalCategoryId = categoryId;
-
-
-                    StringRequest weiYiRequest=new StringRequest(Request.Method.POST, searchUrl, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String s) {
-                            MyLog.d(tag, "post请求的数据：" + s);
-                            List<Good> goods=new ArrayList<Good>();
-                            try {
-                                JSONObject postJsonObject=new JSONObject(s);
-                                JSONArray postJsArray=postJsonObject.getJSONArray("data");
-                                for(int i=0;i<postJsArray.length();i++){
-                                    JSONObject jsObject=postJsArray.getJSONObject(i);
-                                    Good good=new Good();
-                                    good.setGoodId(jsObject.getString("goods_id"));
-                                    good.setGoodName(JsonHelper.decodeUnicode(jsObject.getString("name")));
-                                    good.setGoodsImg(jsObject.getJSONObject("img").getString("url"));
-                                    good.setGoodsSmallImag(jsObject.getJSONObject("img").getString("small"));
-                                    good.setGoodsThumb(jsObject.getJSONObject("img").getString("thumb"));
-                                    goods.add(good);
-                                }
-                                CategoryGridViewAdapter adapter=new CategoryGridViewAdapter(goods,context);
-                                weiYiGridView.setAdapter(adapter);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-                            MyLog.d(tag, "失败的原因：" + volleyError.getMessage());
-
-                        }
-                    }){
-                        //注意这里post传参数的方法，键是json，值是json数据体
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String,String> params = new HashMap<String, String>();
-                            params.put("json","{\"filter\":{\"keywords\":\"\",\"category_id\":\""+finalCategoryId+"\",\"price_range\":\"\",\"brand_id\":\"\",\"intro\":\"\",\"sort_by\":\"\"},\"pagination\":{\"page\":\""+1+"\",\"count\":\""+length+"\"}}");
-                            return params;
-                        }
-                    };
-                    requestQueue.add(weiYiRequest);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-            }
-        });
-        requestQueue.add(allRequest);
-    }
 
 
     /**

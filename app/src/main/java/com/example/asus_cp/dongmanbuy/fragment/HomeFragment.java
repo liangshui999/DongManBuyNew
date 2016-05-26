@@ -33,6 +33,7 @@ import com.example.asus_cp.dongmanbuy.adapter.CaiNiXiHuanAdapter;
 import com.example.asus_cp.dongmanbuy.adapter.JingPinAdapter;
 import com.example.asus_cp.dongmanbuy.adapter.XianShiAdapter;
 import com.example.asus_cp.dongmanbuy.customview.MyGridView;
+import com.example.asus_cp.dongmanbuy.customview.MyGridViewA;
 import com.example.asus_cp.dongmanbuy.model.Binner;
 import com.example.asus_cp.dongmanbuy.model.Good;
 import com.example.asus_cp.dongmanbuy.util.JsonHelper;
@@ -107,7 +108,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private MyGridView jingPinTuiJianGridview;
 
     //猜你喜欢的gridview
-    private MyGridView caiNiXiHuanGridView;
+    private MyGridViewA caiNiXiHuanGridView;
 
     //更多按钮
     private TextView xianShiMoreTextView;
@@ -455,7 +456,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
 
         //-----------------------猜你喜欢部分---------------------------------
-        caiNiXiHuanGridView= (MyGridView) v.findViewById(R.id.grid_view_cai_ni_xi_huan);
+        caiNiXiHuanGridView= (MyGridViewA) v.findViewById(R.id.grid_view_cai_ni_xi_huan);
         String caiNiUrl="http://www.zmobuy.com/PHP/index.php?url=/home/hotgoods";
         StringRequest caiNiXiHuanRequest=new StringRequest(Request.Method.GET, caiNiUrl, new Response.Listener<String>() {
             @Override

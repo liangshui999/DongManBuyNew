@@ -16,7 +16,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
                 <TextView
                     android:id="@+id/text_ming_xin_pian"
                     android:clickable="true"
@@ -27,7 +28,7 @@
                 <com.example.asus_cp.dongmanbuy.customview.MyGridView
                     android:id="@+id/grid_view_ming_xin_pian"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="650dp"
                     android:columnWidth="@dimen/category_fragments_gridview_cloum_with"
                     android:numColumns="auto_fit"
                     android:verticalSpacing="@dimen/category_fragments_gridview_space"
@@ -42,7 +43,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
                 <TextView
                     android:id="@+id/text_da_li_bao"
                     android:clickable="true"
@@ -69,7 +71,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
                 <TextView
                     android:id="@+id/text_pu_ke_pai"
                     android:clickable="true"
@@ -80,7 +83,7 @@
                 <com.example.asus_cp.dongmanbuy.customview.MyGridView
                     android:id="@+id/grid_view_pu_ke_pai"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="650dp"
                     android:columnWidth="@dimen/category_fragments_gridview_cloum_with"
                     android:numColumns="auto_fit"
                     android:verticalSpacing="@dimen/category_fragments_gridview_space"
@@ -95,7 +98,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
                 <TextView
                     android:id="@+id/text_tai_li"
                     android:clickable="true"
@@ -106,7 +110,7 @@
                 <com.example.asus_cp.dongmanbuy.customview.MyGridView
                     android:id="@+id/grid_view_tai_li"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="650dp"
                     android:columnWidth="@dimen/category_fragments_gridview_cloum_with"
                     android:numColumns="auto_fit"
                     android:verticalSpacing="@dimen/category_fragments_gridview_space"
@@ -121,7 +125,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
                 <TextView
                     android:id="@+id/text_qian_bao"
                     android:clickable="true"
@@ -148,7 +153,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
                 <TextView
                     android:id="@+id/text_bi_ji_ben"
                     android:clickable="true"
@@ -174,7 +180,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
                 <TextView
                     android:id="@+id/text_tong_ren"
                     android:clickable="true"

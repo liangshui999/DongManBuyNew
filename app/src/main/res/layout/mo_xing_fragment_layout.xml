@@ -13,7 +13,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
                 <TextView
                     android:id="@+id/text_shou_ban"
                     android:clickable="true"
@@ -24,7 +25,7 @@
                 <com.example.asus_cp.dongmanbuy.customview.MyGridView
                     android:id="@+id/grid_view_shou_ban"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="380dp"
                     android:columnWidth="@dimen/category_fragments_gridview_cloum_with"
                     android:numColumns="auto_fit"
                     android:verticalSpacing="@dimen/category_fragments_gridview_space"
@@ -39,7 +40,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
                 <TextView
                     android:id="@+id/text_mo_xing"
                     android:clickable="true"
@@ -50,7 +52,7 @@
                 <com.example.asus_cp.dongmanbuy.customview.MyGridView
                     android:id="@+id/grid_view_mo_xing"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="540dp"
                     android:columnWidth="@dimen/category_fragments_gridview_cloum_with"
                     android:numColumns="auto_fit"
                     android:verticalSpacing="@dimen/category_fragments_gridview_space"

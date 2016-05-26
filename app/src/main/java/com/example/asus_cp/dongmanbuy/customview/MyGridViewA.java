@@ -5,20 +5,20 @@ import android.util.AttributeSet;
 import android.widget.GridView;
 
 /**
- * 给分类用的
+ * 给首页的猜你喜欢用
  * 当gridview嵌套在scrollview中的时候，使用该自定义的gridview
  *
  * Created by asus-cp on 2016-05-21.
  */
-public class MyGridView extends GridView {
+public class MyGridViewA extends GridView {
     private boolean haveScrollbar = false;
-    public MyGridView(Context context) {
+    public MyGridViewA(Context context) {
         super(context);
     }
-    public MyGridView(Context context, AttributeSet attrs) {
+    public MyGridViewA(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-    public MyGridView(Context context, AttributeSet attrs, int defStyle) {
+    public MyGridViewA(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
     /**
@@ -40,8 +40,8 @@ public class MyGridView extends GridView {
 //        } else {
 //            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 //        }
-//        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >>2,
-//                MeasureSpec.AT_MOST);
-//        super.onMeasure(widthMeasureSpec, expandSpec);
+        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >>2,
+                MeasureSpec.AT_MOST);
+        super.onMeasure(widthMeasureSpec, expandSpec);
     }
 }

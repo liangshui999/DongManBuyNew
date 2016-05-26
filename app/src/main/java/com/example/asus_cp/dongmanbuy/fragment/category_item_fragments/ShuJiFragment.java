@@ -47,6 +47,7 @@ public class ShuJiFragment extends Fragment {
         shuJis.add("线稿");
         ArrayAdapter arrayAdapter=new ArrayAdapter(context,R.layout.category_tong_yong_item_layout,shuJis);
         shuJiListView.setAdapter(arrayAdapter);
+        shuJiListView.setDividerHeight(0);
         shuJiListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

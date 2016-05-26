@@ -7,4 +7,6 @@
     <color name="gray">#F0F0F0</color>
     <color name="home_fragment_background">#CCE8CF</color>
     <color name="white_my">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="shen_hui">@android:color/darker_gray</color>
 </resources>

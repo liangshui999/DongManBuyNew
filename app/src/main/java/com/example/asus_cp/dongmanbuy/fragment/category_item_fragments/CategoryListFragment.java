@@ -7,10 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.asus_cp.dongmanbuy.R;
+import com.example.asus_cp.dongmanbuy.adapter.CategoryListAdapter;
 import com.example.asus_cp.dongmanbuy.util.MyApplication;
 
 import java.util.ArrayList;
@@ -45,7 +45,14 @@ public class CategoryListFragment extends Fragment {
         categories.add("书籍");
         categories.add("DIY定制");
         categories.add("模玩，手");
-        ArrayAdapter adapter=new ArrayAdapter(context,R.layout.category_tong_yong_item_layout,categories);
-        categoryListListView.setAdapter(adapter);
+        CategoryListAdapter categoryListAdapter=new CategoryListAdapter(context,categories);
+        categoryListListView.setAdapter(categoryListAdapter);
+    }
+
+    /**
+     * 返回该碎片所持有的listview
+     */
+    public ListView getListView(){
+        return categoryListListView;
     }
 }

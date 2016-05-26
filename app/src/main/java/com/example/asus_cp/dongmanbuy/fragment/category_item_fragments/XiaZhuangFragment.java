@@ -49,6 +49,7 @@ public class XiaZhuangFragment extends Fragment{
         xiaZhuangs.add("内裤");
         ArrayAdapter arrayAdapter=new ArrayAdapter(context,R.layout.category_tong_yong_item_layout,xiaZhuangs);
         xiaZhaungListView.setAdapter(arrayAdapter);
+        xiaZhaungListView.setDividerHeight(0);
         xiaZhaungListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

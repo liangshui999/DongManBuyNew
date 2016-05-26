@@ -49,6 +49,7 @@ public class XiangBaoFragment extends Fragment{
         xiangBaos.add("旅行箱");
         ArrayAdapter arrayAdapter=new ArrayAdapter(context,R.layout.category_tong_yong_item_layout,xiangBaos);
         xiangBaoListView.setAdapter(arrayAdapter);
+        xiangBaoListView.setDividerHeight(0);
         xiangBaoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
