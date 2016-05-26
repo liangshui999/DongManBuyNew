@@ -32,4 +32,17 @@
     <string name="shop_street_content">精品店铺一条街</string>
     <string name="cai_ni_xi_huan">猜你喜欢</string>
     <string name="ban_quan">"@2016ZMOBUY周末(zmobuy.com)版权所有，并保留所有权利"</string>
+    <string name="wei_yi">卫衣</string>
+    <string name="zhen_zhi_shan">针织衫</string>
+    <string name="wai_tao">外套</string>
+    <string name="t_xue">T恤</string>
+    <string name="ming_xin_pian">明信片</string>
+    <string name="da_li_bao">大礼包</string>
+    <string name="pu_ke_pai">扑克牌</string>
+    <string name="tai_li">台历</string>
+    <string name="qian_bao">钱包</string>
+    <string name="bi_ji_ben">笔记本</string>
+    <string name="tong_ren_ka">AR同人卡</string>
+    <string name="shou_ban">手办</string>
+    <string name="mo_xing">模型</string>
 </resources>

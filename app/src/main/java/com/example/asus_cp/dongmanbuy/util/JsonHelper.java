@@ -182,6 +182,53 @@ public class JsonHelper {
     }
 
     /**
+     * 猜你喜欢和精品推荐的json数据解析
+     */
+    public List<Good> parseCaiNiLikeAndJingPin(String s){
+        List<Good> goods = new ArrayList<Good>();
+        try {
+            JSONObject jsonObject = new JSONObject(s);
+            JSONArray jsonArray = jsonObject.getJSONArray("data");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                Good good = new Good();
+                JSONObject js = jsonArray.getJSONObject(i);
+                good.setGoodId(js.getString("goods_id"));
+                good.setUserId(js.getString("user_id"));
+                good.setGoodName(JsonHelper.decodeUnicode(js.getString("goods_name")));
+                good.setWarehousePrice(js.getString("warehouse_price"));
+                good.setWarehousePromotePrice(js.getString("warehouse_promote_price"));
+                good.setRegionPrice(js.getString("region_price"));
+                good.setPromotePrice(js.getString("region_promote_price"));
+                good.setModel_price(js.getString("model_price"));
+                good.setModel_attr(js.getString("model_attr"));
+                good.setGoods_name_style(js.getString("goods_name_style"));
+                good.setCommentsNumber(js.getString("comments_number"));
+                good.setSalesVolume(js.getString("sales_volume"));
+                good.setMarket_price(js.getString("market_price"));
+                good.setIsNew(js.getString("is_new"));
+                good.setIsBest(js.getString("is_best"));
+                good.setIsHot(js.getString("is_hot"));
+                good.setGoodsNumber(js.getString("goods_number"));
+                good.setOrgPrice(js.getString("org_price"));
+                good.setShopPrice(JsonHelper.decodeUnicode(js.getString("shop_price")));
+                good.setPromotePrice(JsonHelper.decodeUnicode(js.getString("promote_price")));
+                good.setGoodType(js.getString("goods_type"));
+                good.setPromoteStartDate(js.getString("promote_start_date"));
+                good.setPromoteEndDate(js.getString("promote_end_date"));
+                good.setIsPromote(js.getString("is_promote"));
+                good.setGoodsBrief(js.getString("goods_brief"));
+                good.setGoodsThumb(js.getString("goods_thumb"));
+                good.setGoodsImg(js.getString("goods_img"));
+                goods.add(good);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return goods;
+    }
+
+
+    /**
      * 将Unicode转换成中文
      */
     public static String decodeUnicode(String theString) {

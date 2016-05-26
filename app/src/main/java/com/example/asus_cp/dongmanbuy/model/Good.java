@@ -32,6 +32,7 @@ public class Good {
     private String goodsBrief;
     private String goodsThumb;//缩略图
     private String goodsImg;
+    private String goodsSmallImag;
 
     public String getGoodId() {
         return goodId;
@@ -247,5 +248,13 @@ public class Good {
 
     public void setGoodsImg(String goodsImg) {
         this.goodsImg = goodsImg;
+    }
+
+    public String getGoodsSmallImag() {
+        return goodsSmallImag;
+    }
+
+    public void setGoodsSmallImag(String goodsSmallImag) {
+        this.goodsSmallImag = goodsSmallImag;
     }
 }

@@ -1,7 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_dark">
+    android:background="@android:color/darker_gray">
+
+    <!--列表的布局-->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/frame_layout_category_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </FrameLayout>
+       <!-- <fragment
+            android:name="com.example.asus_cp.dongmanbuy.fragment.category_item_fragments.CategoryListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>-->
+    </LinearLayout>
+
+    <!--内容的布局-->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="match_parent"
+        android:background="@color/white_my">
+        <FrameLayout
+            android:id="@+id/frame_layout_buf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!--<fragment
+                android:name="com.example.asus_cp.dongmanbuy.fragment.category_item_fragments.XiangBaoFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>-->
+        </FrameLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
