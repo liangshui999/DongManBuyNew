@@ -29,11 +29,9 @@
                     android:id="@+id/grid_view_ming_xin_pian"
                     android:layout_width="match_parent"
                     android:layout_height="650dp"
-                    android:columnWidth="@dimen/category_fragments_gridview_cloum_with"
-                    android:numColumns="auto_fit"
+                    android:numColumns="3"
                     android:verticalSpacing="@dimen/category_fragments_gridview_space"
                     android:horizontalSpacing="@dimen/category_fragments_gridview_space"
-                    android:stretchMode="columnWidth"
                     android:gravity="center"
                     >
                 </com.example.asus_cp.dongmanbuy.customview.MyGridView>
@@ -84,11 +82,9 @@
                     android:id="@+id/grid_view_pu_ke_pai"
                     android:layout_width="match_parent"
                     android:layout_height="650dp"
-                    android:columnWidth="@dimen/category_fragments_gridview_cloum_with"
-                    android:numColumns="auto_fit"
+                    android:numColumns="3"
                     android:verticalSpacing="@dimen/category_fragments_gridview_space"
                     android:horizontalSpacing="@dimen/category_fragments_gridview_space"
-                    android:stretchMode="columnWidth"
                     android:gravity="center"
                     >
                 </com.example.asus_cp.dongmanbuy.customview.MyGridView>
@@ -111,11 +107,9 @@
                     android:id="@+id/grid_view_tai_li"
                     android:layout_width="match_parent"
                     android:layout_height="650dp"
-                    android:columnWidth="@dimen/category_fragments_gridview_cloum_with"
-                    android:numColumns="auto_fit"
+                    android:numColumns="3"
                     android:verticalSpacing="@dimen/category_fragments_gridview_space"
                     android:horizontalSpacing="@dimen/category_fragments_gridview_space"
-                    android:stretchMode="columnWidth"
                     android:gravity="center"
                     >
                 </com.example.asus_cp.dongmanbuy.customview.MyGridView>

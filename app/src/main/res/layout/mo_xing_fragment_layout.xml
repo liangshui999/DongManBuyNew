@@ -25,12 +25,10 @@
                 <com.example.asus_cp.dongmanbuy.customview.MyGridView
                     android:id="@+id/grid_view_shou_ban"
                     android:layout_width="match_parent"
-                    android:layout_height="380dp"
-                    android:columnWidth="@dimen/category_fragments_gridview_cloum_with"
-                    android:numColumns="auto_fit"
+                    android:layout_height="wrap_content"
+                    android:numColumns="3"
                     android:verticalSpacing="@dimen/category_fragments_gridview_space"
                     android:horizontalSpacing="@dimen/category_fragments_gridview_space"
-                    android:stretchMode="columnWidth"
                     android:gravity="center"
                     >
                 </com.example.asus_cp.dongmanbuy.customview.MyGridView>
@@ -52,12 +50,10 @@
                 <com.example.asus_cp.dongmanbuy.customview.MyGridView
                     android:id="@+id/grid_view_mo_xing"
                     android:layout_width="match_parent"
-                    android:layout_height="540dp"
-                    android:columnWidth="@dimen/category_fragments_gridview_cloum_with"
-                    android:numColumns="auto_fit"
+                    android:layout_height="wrap_content"
+                    android:numColumns="3"
                     android:verticalSpacing="@dimen/category_fragments_gridview_space"
                     android:horizontalSpacing="@dimen/category_fragments_gridview_space"
-                    android:stretchMode="columnWidth"
                     android:gravity="center"
                     >
                 </com.example.asus_cp.dongmanbuy.customview.MyGridView>

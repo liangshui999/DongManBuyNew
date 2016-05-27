@@ -184,7 +184,7 @@ public class SlidingMenu extends HorizontalScrollView
                 float deltaX=x-interceptedX;
                 float deltaY=y-interceptedY;
                 MyLog.d(tag,"x="+x+"..............."+"interceptedX="+interceptedX);
-                if(deltaX>20 && Math.abs(deltaX)>Math.abs(deltaY)){   //从左往右滑动,要划出菜单
+                if(deltaX>30 && Math.abs(deltaX)>Math.abs(deltaY)){   //从左往右滑动,要划出菜单
                     intercepted=true;
                     MyLog.d(tag, "侧滑从左往右滑动");
                 }else {
@@ -197,7 +197,7 @@ public class SlidingMenu extends HorizontalScrollView
                 if(isOpen){
                     MyLog.d(tag, "执行了吗");
                     flag++;
-                    if(deltaX<-20 && Math.abs(deltaX)>Math.abs(deltaY)){   //从左往右滑动,要划出菜单
+                    if(deltaX<-30 && Math.abs(deltaX)>Math.abs(deltaY)){   //从左往右滑动,要划出菜单
                         intercepted=true;
                         MyLog.d(tag, "侧滑从右往左滑动");
                     }else {

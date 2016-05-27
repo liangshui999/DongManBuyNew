@@ -22,6 +22,12 @@
             </intent-filter>
         </activity>
 
+        <!--登录activity-->
+        <activity android:name=".activity.LoginActivity"/>
+
+        <!--注册activity-->
+        <activity android:name=".activity.RegisterActivity"/>
+
         <!--搜索的activity-->
         <activity android:name=".activity.MySearchActivity">
             <intent-filter>

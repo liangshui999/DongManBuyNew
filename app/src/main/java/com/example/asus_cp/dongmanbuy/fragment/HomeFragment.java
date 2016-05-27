@@ -1,6 +1,7 @@
 package com.example.asus_cp.dongmanbuy.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.asus_cp.dongmanbuy.R;
+import com.example.asus_cp.dongmanbuy.activity.LoginActivity;
 import com.example.asus_cp.dongmanbuy.adapter.CaiNiXiHuanAdapter;
 import com.example.asus_cp.dongmanbuy.adapter.JingPinAdapter;
 import com.example.asus_cp.dongmanbuy.adapter.XianShiAdapter;
@@ -618,7 +620,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_my_wallet:
-                Toast.makeText(context, "点击了我的钱包", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(context, LoginActivity.class);
+                startActivity(intent);
                 break;
             case R.id.ll_my_order:
                 Toast.makeText(context, "点击了我的订单", Toast.LENGTH_SHORT).show();
@@ -802,19 +805,24 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
          * position 	相应的位置
          */
         public Object instantiateItem(ViewGroup container, int position) {
+            View view=null;
             //对ViewPager页号求模取出View列表中要显示的项
-            position %= imageViews.size();
-            if (position<0 ){
-                position = imageViews.size()+position;
-            }
-            View view =imageViews.get(position);
+            if(imageViews.size()>0){
+                position %= imageViews.size();
+                if (position<0 ){
+                    position = imageViews.size()+position;
+                }
+
+                view =imageViews.get(position);
 //如果View已经在之前添加到了一个父组件，则必须先remove，否则会抛出IllegalStateException。
-            ViewParent vp =view.getParent();
-            if (vp!= null ){
-                ViewGroup parent = (ViewGroup)vp;
-                parent.removeView(view);
+                ViewParent vp =view.getParent();
+                if (vp!= null ){
+                    ViewGroup parent = (ViewGroup)vp;
+                    parent.removeView(view);
+                }
+                container.addView(view);
             }
-            container.addView(view);
+
             return view;
         }
 

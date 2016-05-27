@@ -1,6 +1,10 @@
 package com.example.asus_cp.dongmanbuy.util;
 
 import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.GridView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -93,6 +97,7 @@ public class CategoryImageLoadHelper {
                                 }
                                 CategoryGridViewAdapter adapter=new CategoryGridViewAdapter(goods,context);
                                 gridView.setAdapter(adapter);
+                                setGridViewViewHeightBasedOnChildren(gridView);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -126,6 +131,38 @@ public class CategoryImageLoadHelper {
             }
         });
         requestQueue.add(allRequest);
+    }
+
+    /**
+     * 动态设置GridView的高度
+     * @param gridView
+     */
+    public static void setGridViewViewHeightBasedOnChildren(GridView gridView) {
+        if(gridView == null) return;
+
+        Adapter gridAdapter = gridView.getAdapter();
+        if (gridAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+        int count=gridAdapter.getCount();
+        if(count%3==0){
+            count=count/3;
+        }else{
+            count=count/3+1;
+        }
+        for (int i = 0; i < count; i++) {
+            View listItem = gridAdapter.getView(i, null, gridView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        totalHeight= (int) (totalHeight*2.4);//这真是神来之笔啊,这里根据不同的屏幕做个适配就好了
+
+        ViewGroup.LayoutParams params = gridView.getLayoutParams();
+        params.height = totalHeight ;
+        gridView.setLayoutParams(params);
     }
 
 }
