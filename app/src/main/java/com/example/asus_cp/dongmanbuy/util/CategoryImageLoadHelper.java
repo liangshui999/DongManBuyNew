@@ -31,9 +31,12 @@ import java.util.Map;
  * Created by asus-cp on 2016-05-26.
  */
 public class CategoryImageLoadHelper {
+
+    private static int densty;
+
     private RequestQueue requestQueue;
     private Context context;
-    private String tag="CategoryImageLoadHelper";
+    private static String tag="CategoryImageLoadHelper";
 
     private String getAllCategoryUrl="http://www.zmobuy.com/PHP/index.php?url=/home/categorylist";//获取所有类别的url
 
@@ -42,6 +45,10 @@ public class CategoryImageLoadHelper {
     public CategoryImageLoadHelper() {
         requestQueue=MyApplication.getRequestQueue();
         context=MyApplication.getContext();
+    }
+
+    public CategoryImageLoadHelper(int densty1){
+        densty=densty1;
     }
 
     /**
@@ -138,8 +145,8 @@ public class CategoryImageLoadHelper {
      * @param gridView
      */
     public static void setGridViewViewHeightBasedOnChildren(GridView gridView) {
+        MyLog.d(tag,"像素密度"+densty);
         if(gridView == null) return;
-
         Adapter gridAdapter = gridView.getAdapter();
         if (gridAdapter == null) {
             // pre-condition
@@ -154,11 +161,30 @@ public class CategoryImageLoadHelper {
             count=count/3+1;
         }
         for (int i = 0; i < count; i++) {
-            View listItem = gridAdapter.getView(i, null, gridView);
+            View listItem = gridAdapter.getView(3*i, null, gridView);
             listItem.measure(0, 0);
             totalHeight += listItem.getMeasuredHeight();
         }
-        totalHeight= (int) (totalHeight*2.4);//这真是神来之笔啊,这里根据不同的屏幕做个适配就好了
+
+        switch (densty){
+            case 120:
+                totalHeight= (int) (2.4*totalHeight);
+                break;
+            case 160:
+                totalHeight= (int) (3.2*totalHeight);
+                break;
+            case 240:
+                totalHeight= (int) (2.4*totalHeight);
+                break;
+            case 320:
+                totalHeight= (int) (1.9*totalHeight);
+                break;
+            case 480:
+                totalHeight= (int) (1.4*totalHeight);
+                break;
+
+        }
+        //totalHeight= (int) (2.4*totalHeight);//这真是神来之笔啊,这里根据不同的屏幕做个适配就好了
 
         ViewGroup.LayoutParams params = gridView.getLayoutParams();
         params.height = totalHeight ;

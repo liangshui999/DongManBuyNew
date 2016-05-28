@@ -40,11 +40,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-        <android.support.v4.view.ViewPager
+        <!--<android.support.v4.view.ViewPager
             android:id="@+id/viewpager_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </android.support.v4.view.ViewPager>
+        </android.support.v4.view.ViewPager>-->
+
+        <FrameLayout
+            android:id="@+id/frame_layout_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
 
         <!--消息和扫一扫所在的布局-->
         <LinearLayout
@@ -52,8 +58,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_alignRight="@id/viewpager_main"
-            android:layout_alignTop="@id/viewpager_main"
+            android:layout_alignRight="@id/frame_layout_main"
+            android:layout_alignTop="@id/frame_layout_main"
             android:visibility="gone">
             <LinearLayout
                 android:id="@+id/ll_message"
@@ -106,7 +112,6 @@
                 android:src="@mipmap/home_normal"/>
             <TextView
                 android:id="@+id/text_home"
-                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/home"/>
@@ -126,7 +131,6 @@
                 android:src="@mipmap/category_normal"/>
             <TextView
                 android:id="@+id/text_category"
-                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/category"/>
@@ -146,7 +150,6 @@
                 android:src="@mipmap/find_normal"/>
             <TextView
                 android:id="@+id/text_find"
-                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/find"/>
@@ -166,7 +169,6 @@
                 android:src="@mipmap/shopstreet_normal"/>
             <TextView
                 android:id="@+id/text_shop_street"
-                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/shop_street"/>
@@ -186,7 +188,6 @@
                 android:src="@mipmap/shoppingcar_normal"/>
             <TextView
                 android:id="@+id/text_shoppingz_car"
-                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/shopping_car"/>

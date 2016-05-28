@@ -110,17 +110,54 @@ public class SlidingMenu extends HorizontalScrollView
         }
     }
 
+
+    private float myFirstX =0f;
+    private float myLastX=0f;
+
+    /**
+     * 触摸事件的处理
+     * @param ev
+     * @return
+     */
     @Override
     public boolean onTouchEvent(MotionEvent ev)
     {
         int action = ev.getAction();
+        switch (action)
+        {
+            case MotionEvent.ACTION_DOWN:
+                myFirstX =ev.getX();//当是拦截的，把事件转过来的时候，这边会接收不到down事件，所以在onintercept的方法里面也必须有这个语句
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                /*float moveX=ev.getX();
+                float moveDeltaX=moveX- myFirstX;
+                if(moveX-myLastX>0){
+                    this.smoothScrollTo((int) (600-moveDeltaX),0);
+                }else{
+                    this.smoothScrollTo((int) moveDeltaX,0);
+                }
+                myLastX=moveX;*/
+                break;
+            // Up时，进行判断，如果显示区域大于菜单宽度一半则完全显示，否则隐藏
+            case MotionEvent.ACTION_UP:
+                float x=ev.getX();
+                float deltaX=x- myFirstX;
+                if(deltaX>200){
+                    this.smoothScrollTo(0, 0);
+                    isOpen = true;
+                    MyLog.d(tag,"处理从左往右滑动"+isOpen);
+                }else{
+                    this.smoothScrollTo(600, 0);
+                    isOpen = false;
+                }
+                return true;
+        }
+        return super.onTouchEvent(ev);
+        /*int action = ev.getAction();
         float firstX=0;
         switch (action)
         {
-            /*case MotionEvent.ACTION_DOWN:
-                MyLog.d(tag, "拦截了"+mMenuWidth);
-                this.scrollTo(200, 0);
-                return true;*/
             // Up时，进行判断，如果显示区域大于菜单宽度一半则完全显示，否则隐藏
             case MotionEvent.ACTION_UP:
                 int scrollX = getScrollX();
@@ -141,21 +178,11 @@ public class SlidingMenu extends HorizontalScrollView
                 }
                 return false;
         }
-        return false;
+        return false;*/
     }
 
 
-    /*case MotionEvent.ACTION_UP:
-    int scrollX = getScrollX();
-    if (scrollX > mHalfMenuWidth)
-    {
-        this.smoothScrollTo(mMenuWidth, 0);
-        isOpen = false;
-    } else
-    {
-        this.smoothScrollTo(0, 0);
-        isOpen = true;
-    }*/
+
     /**
      * 拦截事件的方法,最外层的不拦截任何事件
      *
@@ -174,6 +201,7 @@ public class SlidingMenu extends HorizontalScrollView
                 intercepted=false;
                 interceptedX=ev.getX();
                 interceptedY=ev.getY();
+                myFirstX =ev.getX();//拦截的会先获取到事件
                 break;
             case MotionEvent.ACTION_MOVE:
 //                if(isOpen){
@@ -184,9 +212,9 @@ public class SlidingMenu extends HorizontalScrollView
                 float deltaX=x-interceptedX;
                 float deltaY=y-interceptedY;
                 MyLog.d(tag,"x="+x+"..............."+"interceptedX="+interceptedX);
-                if(deltaX>30 && Math.abs(deltaX)>Math.abs(deltaY)){   //从左往右滑动,要划出菜单
+                if(deltaX>200 && Math.abs(deltaX)>Math.abs(deltaY)){   //从左往右滑动,要划出菜单
                     intercepted=true;
-                    MyLog.d(tag, "侧滑从左往右滑动");
+                    MyLog.d(tag, "拦截从左往右滑动");
                 }else {
                     intercepted=false;
                     //MyLog.d(tag,"侧滑从左往右滑动");
@@ -196,10 +224,10 @@ public class SlidingMenu extends HorizontalScrollView
 
                 if(isOpen){
                     MyLog.d(tag, "执行了吗");
-                    flag++;
-                    if(deltaX<-30 && Math.abs(deltaX)>Math.abs(deltaY)){   //从左往右滑动,要划出菜单
+                    //flag++;
+                    if(deltaX<-200 && Math.abs(deltaX)>Math.abs(deltaY)){   //从左往右滑动,要划出菜单
                         intercepted=true;
-                        MyLog.d(tag, "侧滑从右往左滑动");
+                        MyLog.d(tag, "拦截从右往左滑动");
                     }else {
                         intercepted=false;
                         //MyLog.d(tag,"侧滑从左往右滑动");

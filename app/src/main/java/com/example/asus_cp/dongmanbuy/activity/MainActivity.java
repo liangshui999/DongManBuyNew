@@ -6,11 +6,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,6 +27,7 @@ import com.example.asus_cp.dongmanbuy.fragment.FindFragment;
 import com.example.asus_cp.dongmanbuy.fragment.HomeFragment;
 import com.example.asus_cp.dongmanbuy.fragment.ShopStreetFragment;
 import com.example.asus_cp.dongmanbuy.fragment.ShoppingCarFragment;
+import com.example.asus_cp.dongmanbuy.util.CategoryImageLoadHelper;
 import com.example.asus_cp.dongmanbuy.util.MyLog;
 
 import java.util.ArrayList;
@@ -33,7 +37,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private android.widget.SearchView searchView;
     private ImageButton loginButton;//登录按钮
     private ImageButton messageButton;//消息按钮
-    private ViewPager viewPager;
+    //private ViewPager viewPager;
+    private FrameLayout frameLaout;//内容区域的容器
+    private FragmentManager fragmentManager;//
+    private HomeFragment homeFragment;
+    private CategoryFragment categoryFragment;
+    private FindFragment findFragment;
+    private ShopStreetFragment shopStreetFragment;
+    private ShoppingCarFragment shoppingCarFragment;
+
+
     private LinearLayout homell;//首页标签
     private LinearLayout categoryll;//分类标签
     private LinearLayout findll;//发现标签
@@ -116,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         };
-
+        new CategoryImageLoadHelper(getXiangSuMiDu());
     }
 
     /**
@@ -193,8 +206,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         messagell.setOnClickListener(this);
         sao.setOnClickListener(this);
 
+        //初始化framelayout
+        frameLaout= (FrameLayout) findViewById(R.id.frame_layout_main);
+        fragmentManager=getSupportFragmentManager();
+        homeFragment=new HomeFragment();
+        categoryFragment=new CategoryFragment();
+        findFragment=new FindFragment();
+        shopStreetFragment=new ShopStreetFragment();
+        shoppingCarFragment=new ShoppingCarFragment();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.frame_layout_main,homeFragment);
+        fragmentTransaction.commit();
+
+
+
         //初始化viewpager
-        viewPager= (ViewPager) findViewById(R.id.viewpager_main);
+        /*viewPager= (ViewPager) findViewById(R.id.viewpager_main);
         viewPager.setAdapter(fragmentPagerAdapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -235,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onPageScrollStateChanged(int state) {
 
             }
-        });
+        });*/
 
         slidingMenu= (SlidingMenu) findViewById(R.id.id_menu);
 
@@ -296,31 +323,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 messageAndSao.setVisibility(View.VISIBLE);//让下拉框弹出来
                 break;
             case R.id.ll_home:
-                viewPager.setCurrentItem(HOME);
+                //viewPager.setCurrentItem(HOME);
+                FragmentTransaction homeTransaction=fragmentManager.beginTransaction();
+                homeTransaction.replace(R.id.frame_layout_main,homeFragment);
+                homeTransaction.commit();
                 resetLabel();
                 homeImg.setImageResource(R.mipmap.home_selected);
                 homeText.setTextColor(getResources().getColor(R.color.bottom_lable_color));
                 break;
             case R.id.ll_category:
-                viewPager.setCurrentItem(CATEGORY);
+                //viewPager.setCurrentItem(CATEGORY);
+                FragmentTransaction categoryTransaction=fragmentManager.beginTransaction();
+                categoryTransaction.replace(R.id.frame_layout_main,categoryFragment);
+                categoryTransaction.commit();
                 resetLabel();
                 categoryImg.setImageResource(R.mipmap.category_selected);
                 categoryText.setTextColor(getResources().getColor(R.color.bottom_lable_color));
                 break;
             case R.id.ll_find:
-                viewPager.setCurrentItem(FIND);
+                //viewPager.setCurrentItem(FIND);
+                FragmentTransaction findTransaction=fragmentManager.beginTransaction();
+                findTransaction.replace(R.id.frame_layout_main,findFragment);
+                findTransaction.commit();
                 resetLabel();
                 findImg.setImageResource(R.mipmap.find_selected);
                 findText.setTextColor(getResources().getColor(R.color.bottom_lable_color));
                 break;
             case R.id.ll_shop_street:
-                viewPager.setCurrentItem(SHOP_STREET);
+                //viewPager.setCurrentItem(SHOP_STREET);
+                FragmentTransaction shopStreetTransaction=fragmentManager.beginTransaction();
+                shopStreetTransaction.replace(R.id.frame_layout_main,shopStreetFragment);
+                shopStreetTransaction.commit();
                 resetLabel();
                 shopStreetImg.setImageResource(R.mipmap.shopstreet_selected);
                 shopStreetText.setTextColor(getResources().getColor(R.color.bottom_lable_color));
                 break;
             case R.id.ll_shopping_car:
-                viewPager.setCurrentItem(SHOPPING_CAR);
+                //viewPager.setCurrentItem(SHOPPING_CAR);
+                FragmentTransaction shoppingCarTransaction=fragmentManager.beginTransaction();
+                shoppingCarTransaction.replace(R.id.frame_layout_main,shoppingCarFragment);
+                shoppingCarTransaction.commit();
                 resetLabel();
                 shoppingCarImg.setImageResource(R.mipmap.shoppingcar_selected);
                 shoppingCarText.setTextColor(getResources().getColor(R.color.bottom_lable_color));
@@ -368,6 +410,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         searchView.clearFocus();
         MyLog.d(tag, "返回键");
         super.onBackPressed();
+    }
+
+
+    /**
+     * 获取屏幕分辨率的方法,获取屏幕的像素密度
+     */
+    public int getXiangSuMiDu(){
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int densityDPI = dm.densityDpi;     // 屏幕密度（每寸像素：120/160/240/320）
+        MyLog.d(tag,"像素密度："+densityDPI+"");
+        return densityDPI;
     }
 
    /* @Override

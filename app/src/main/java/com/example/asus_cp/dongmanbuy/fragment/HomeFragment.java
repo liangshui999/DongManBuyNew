@@ -121,6 +121,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private RequestQueue requestQueue;//请求队列
 
+
     private Handler handler = new MyHandler();
 
     class MyHandler extends Handler{

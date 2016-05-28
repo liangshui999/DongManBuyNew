@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.example.asus_cp.dongmanbuy.R;
+import com.example.asus_cp.dongmanbuy.activity.MainActivity;
 import com.example.asus_cp.dongmanbuy.fragment.category_item_fragments.CategoryListFragment;
 import com.example.asus_cp.dongmanbuy.fragment.category_item_fragments.DIYFragment;
 import com.example.asus_cp.dongmanbuy.fragment.category_item_fragments.MaoRongFragment;
@@ -60,6 +61,9 @@ public class CategoryFragment extends Fragment {
     private static final int SHU_JI=6;
     private static final int DIY_DING_ZHI=7;
     private static final int MO_XING=8;
+
+    private int density;//屏幕像素密度
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,11 +84,18 @@ public class CategoryFragment extends Fragment {
         manager=getChildFragmentManager();//注意用的是这个方法
         final FragmentTransaction transaction=manager.beginTransaction();
         transaction.add(R.id.frame_layout_category_list, categoryListFragment);
-        transaction.add(R.id.frame_layout_buf,shangZhuangFragment);
+        transaction.add(R.id.frame_layout_buf, shangZhuangFragment);
         transaction.commit();
 
+        MainActivity mainActivity= (MainActivity) getActivity();
+        density=mainActivity.getXiangSuMiDu();
+        MyLog.d(tag,"密度"+density);
 
         return v;
+    }
+
+    public int getDensity(){
+        return density;
     }
 
 

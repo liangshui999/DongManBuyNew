@@ -218,12 +218,13 @@
             </LinearLayout>
 
             <!--限时秒杀-->
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@android:color/white">
                 <TextView
+                    android:id="@+id/xian_shi_biao_ti"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/xian_shi_miao_sha"
@@ -235,16 +236,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/miao_sha_time"
+                    android:layout_toRightOf="@id/xian_shi_biao_ti"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"/>
                 <TextView
                     android:id="@+id/text_xian_shi_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@mipmap/more"
-                    android:layout_marginLeft="160dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
                     android:text="@string/more"
                     android:clickable="true"/>
-            </LinearLayout>
+            </RelativeLayout>
 
             <!--限时秒杀的列表展示-->
             <LinearLayout
@@ -306,12 +311,13 @@
 
 
             <!--精品推荐-->
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@android:color/white">
                 <TextView
+                    android:id="@+id/jing_ping_tui_jian_biao_ti"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/jing_pin_tui_jian"
@@ -319,6 +325,8 @@
                     android:textSize="18sp"
                     android:textStyle="bold"/>
                 <TextView
+                    android:layout_toRightOf="@id/jing_ping_tui_jian_biao_ti"
+                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/jing_ping_tui_jian_content"
@@ -328,10 +336,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@mipmap/more"
-                    android:layout_marginLeft="60dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
                     android:clickable="true"
                     android:text="@string/more"/>
-            </LinearLayout>
+            </RelativeLayout>
 
             <!--精品推荐的列表展示-->
 
@@ -396,13 +406,14 @@
             </RelativeLayout>
 
             <!--店铺街的标题，更多-->
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="@android:color/white"
                 android:layout_marginTop="10dp">
                 <TextView
+                    android:id="@+id/dian_pu_jie_biao_ti"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/shop_street"
@@ -410,6 +421,8 @@
                     android:textSize="18sp"
                     android:layout_marginLeft="10dp"/>
                 <TextView
+                    android:layout_toRightOf="@id/dian_pu_jie_biao_ti"
+                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/shop_street_content"
@@ -419,11 +432,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@mipmap/more"
-                    android:layout_marginLeft="160dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
                     android:clickable="true"
                     android:text="@string/more"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <!--店铺街的内容-->
             <RelativeLayout

@@ -18,15 +18,16 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:orientation="horizontal" >
             <include layout="@layout/layout_menu" />
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+            <include layout="@layout/content_main"/>
+            <!--<LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 >
-                <include layout="@layout/content_main"/>
-            </LinearLayout>
+
+            </LinearLayout>-->
         </LinearLayout>
 
     </com.example.asus_cp.dongmanbuy.customview.SlidingMenu>
