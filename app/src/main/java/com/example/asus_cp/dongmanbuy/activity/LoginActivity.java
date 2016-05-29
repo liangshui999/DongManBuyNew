@@ -3,6 +3,8 @@ package com.example.asus_cp.dongmanbuy.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -12,13 +14,31 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.asus_cp.dongmanbuy.R;
+import com.example.asus_cp.dongmanbuy.util.MyApplication;
+import com.example.asus_cp.dongmanbuy.util.MyLog;
+import com.example.asus_cp.dongmanbuy.util.MyMd5;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 登录的界面
  * Created by asus-cp on 2016-05-27.
  */
 public class LoginActivity extends Activity implements View.OnClickListener{
+
+    private RequestQueue requestQueue;
+    private String loginUrl="http://www.zmobuy.com/PHP/index.php?url=/user/signin";
+    private String tag="LoginActivity";
+
+    private int passwordFlag;//改变密码明码的标记
 
     private EditText zhangHaoEditText;//账号
     private EditText passWordEdtiText;//密码
@@ -34,6 +54,9 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);//不要标题栏
         setContentView(R.layout.login_layout);
+
+        requestQueue= MyApplication.getRequestQueue();
+
         zhangHaoEditText= (EditText) findViewById(R.id.edit_zhang_hao);
         passWordEdtiText= (EditText) findViewById(R.id.edit_password);
         seePassWordImagView= (ImageView) findViewById(R.id.img_see_password);
@@ -62,13 +85,50 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.img_see_password:
-                Toast.makeText(this,"点击了隐藏账号",Toast.LENGTH_SHORT).show();
+                if(passwordFlag%2==0){
+                    seePassWordImagView.setBackgroundResource(R.drawable.see_password_selected);
+                    passWordEdtiText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }else{
+                    seePassWordImagView.setBackgroundResource(R.drawable.see_password_normal);
+                    passWordEdtiText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+                passwordFlag++;
                 break;
             case R.id.text_forget_password:
                 Toast.makeText(this,"点击了忘记密码",Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.btn_login:
-                Toast.makeText(this,"点击了登录按钮",Toast.LENGTH_SHORT).show();
+            case R.id.btn_login://登录
+                final String zhangHao=zhangHaoEditText.getText().toString();
+                final String password=passWordEdtiText.getText().toString();
+                if(zhangHao.equals("")||zhangHao.isEmpty()){
+                    Toast.makeText(this,"账号为空",Toast.LENGTH_SHORT).show();
+                }else if(password.equals("")||password.isEmpty()){
+                    Toast.makeText(this,"密码为空",Toast.LENGTH_SHORT).show();
+                }else {
+                    StringRequest loginRequest=new StringRequest(Request.Method.POST, loginUrl, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            MyLog.d(tag,"登录的数据返回:"+s);
+                            Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String,String> map = new HashMap<String,String>();
+                            map.put("name", zhangHao);
+                            map.put("password", MyMd5.md5encode(password));
+                            MyLog.d(tag,MyMd5.md5encode(password));
+                            return map;
+                        }
+                    };
+                    requestQueue.add(loginRequest);
+                }
+
                 break;
             case R.id.text_new_user_register://用户注册
                 Intent registerIntent=new Intent(this,RegisterActivity.class);

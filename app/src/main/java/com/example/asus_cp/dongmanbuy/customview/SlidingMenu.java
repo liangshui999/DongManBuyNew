@@ -143,7 +143,7 @@ public class SlidingMenu extends HorizontalScrollView
             case MotionEvent.ACTION_UP:
                 float x=ev.getX();
                 float deltaX=x- myFirstX;
-                if(deltaX>200){
+                if(deltaX>150){
                     this.smoothScrollTo(0, 0);
                     isOpen = true;
                     MyLog.d(tag,"处理从左往右滑动"+isOpen);
@@ -212,7 +212,7 @@ public class SlidingMenu extends HorizontalScrollView
                 float deltaX=x-interceptedX;
                 float deltaY=y-interceptedY;
                 MyLog.d(tag,"x="+x+"..............."+"interceptedX="+interceptedX);
-                if(deltaX>200 && Math.abs(deltaX)>Math.abs(deltaY)){   //从左往右滑动,要划出菜单
+                if(deltaX>150 && Math.abs(deltaX)>Math.abs(deltaY)){   //从左往右滑动,要划出菜单
                     intercepted=true;
                     MyLog.d(tag, "拦截从左往右滑动");
                 }else {
@@ -225,7 +225,7 @@ public class SlidingMenu extends HorizontalScrollView
                 if(isOpen){
                     MyLog.d(tag, "执行了吗");
                     //flag++;
-                    if(deltaX<-200 && Math.abs(deltaX)>Math.abs(deltaY)){   //从左往右滑动,要划出菜单
+                    if(deltaX<-150 && Math.abs(deltaX)>Math.abs(deltaY)){   //从左往右滑动,要划出菜单
                         intercepted=true;
                         MyLog.d(tag, "拦截从右往左滑动");
                     }else {

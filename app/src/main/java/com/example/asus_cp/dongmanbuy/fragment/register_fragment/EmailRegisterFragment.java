@@ -2,6 +2,7 @@ package com.example.asus_cp.dongmanbuy.fragment.register_fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,14 +17,33 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.asus_cp.dongmanbuy.R;
+import com.example.asus_cp.dongmanbuy.activity.LoginActivity;
+import com.example.asus_cp.dongmanbuy.util.CheckMobileAndEmail;
+import com.example.asus_cp.dongmanbuy.util.MyApplication;
+import com.example.asus_cp.dongmanbuy.util.MyLog;
+import com.example.asus_cp.dongmanbuy.util.MyMd5;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 邮箱注册的碎片
  * Created by asus-cp on 2016-05-27.
  */
 public class EmailRegisterFragment extends Fragment implements View.OnClickListener{
+
+    private String tag="EmailRegisterFragment";
+
     private Context context;
+
+    private RequestQueue requestQueue;
 
     private String userName;//用户输入的用户名
     private String email;//用户输入的邮箱
@@ -41,6 +61,9 @@ public class EmailRegisterFragment extends Fragment implements View.OnClickListe
 
     private int passwordFlag;//判断password的点击状态
     private int againPasswordFlag;//判断againpassword的状态
+
+    private String requestUrl="http://www.zmobuy.com/PHP/index.php?url=/user/signup";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,7 +74,7 @@ public class EmailRegisterFragment extends Fragment implements View.OnClickListe
 
     private void init(View v) {
         context=getActivity();
-
+        requestQueue= MyApplication.getRequestQueue();
         userNameEditText = (EditText) v.findViewById(R.id.edit_user_name);
         inputEmailEditText = (EditText) v.findViewById(R.id.edit_input_email);
 
@@ -78,10 +101,49 @@ public class EmailRegisterFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_email_register://点击了注册按钮
+                final String userName=userNameEditText.getText().toString();
+                final String email=inputEmailEditText.getText().toString();
+                final String passWord=inputPasswordEditText.getText().toString();
+                String aginPassWord=inputAgainPasswordEditText.getText().toString();
+                if(userName.equals("")||userName.isEmpty()){
+                    Toast.makeText(context,"用户名为空",Toast.LENGTH_SHORT).show();
+                }else if(!CheckMobileAndEmail.checkEmail(email)){
+                    Toast.makeText(context,"邮箱格式错误,输入@时请用英文状态下的@",Toast.LENGTH_SHORT).show();
+                }else if(passWord.equals("")||passWord.isEmpty()){
+                    Toast.makeText(context,"密码为空",Toast.LENGTH_SHORT).show();
+                }else if(aginPassWord.equals("")||aginPassWord.isEmpty()){
+                    Toast.makeText(context,"再次输入密码为空",Toast.LENGTH_SHORT).show();
+                }else if(!passWord.equals(aginPassWord)){
+                    Toast.makeText(context,"2次密码不相等",Toast.LENGTH_SHORT).show();
+                }else{
+                    StringRequest registerRequest=new StringRequest(Request.Method.POST, requestUrl, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            Toast.makeText(context,"注册成功",Toast.LENGTH_SHORT).show();
+                            MyLog.d(tag,"返回的数据是："+s);
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
 
+                        }
+                    }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String,String> map = new HashMap<String,String>();
+                            map.put("name", userName);
+                            map.put("email", email);
+                            map.put("password", MyMd5.md5encode(passWord));
+                            return map;
+                        }
+                    };
+                    requestQueue.add(registerRequest);
+                }
                 break;
             case R.id.text_zhi_jie_login_email_register://点击了直接登录
-                Toast.makeText(context,"点击了直接登录",Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(context, LoginActivity.class);
+                startActivity(intent);
+
                 break;
             case R.id.img_see_password_email_register://点击了改变密码明码
                 if(passwordFlag%2==0){

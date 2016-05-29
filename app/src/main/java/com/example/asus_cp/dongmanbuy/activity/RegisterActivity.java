@@ -35,6 +35,8 @@ public class RegisterActivity extends FragmentActivity implements View.OnClickLi
         emailRegisterTextView= (TextView) findViewById(R.id.text_email_register);
         bufFrameLayout= (FrameLayout) findViewById(R.id.frame_register_buf);
 
+        phoneRegisterTextView.setTextColor(getResources().getColor(R.color.bottom_lable_color));
+
         phoneRegisterTextView.setOnClickListener(this);
         emailRegisterTextView.setOnClickListener(this);
 

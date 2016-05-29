@@ -156,7 +156,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     //secondPointGroup = (LinearLayout) v.findViewById(R.id.ll_point_group_second);
                     //指示点的初始化
                     initPoint(secondPointGroup,secondImageViews.size());
-                    secondViewPager.setCurrentItem(Integer.MAX_VALUE / 2 - 1);
+                    secondViewPager.setCurrentItem(0);
                     secondViewPager.setAdapter(new MyPagerAdapter(secondImageViews));
                     break;
                 case SCROLL__THREE_BINNER:
@@ -171,7 +171,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     //threePointGroup = (LinearLayout) v.findViewById(R.id.ll_point_group_three);
                     //指示点的初始化
                     initPoint(threePointGroup,threeImageViews.size());
-                    threeViewPager.setCurrentItem(Integer.MAX_VALUE / 2 - 1);
+                    threeViewPager.setCurrentItem(0);
                     threeViewPager.setAdapter(new MyPagerAdapter(threeImageViews));
                     break;
                 case REFRESH_XIAN_SHI_MIAO_SHA://更新限时秒杀
