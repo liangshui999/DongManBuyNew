@@ -24,11 +24,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.asus_cp.dongmanbuy.R;
-import com.example.asus_cp.dongmanbuy.activity.LoginActivity;
+import com.example.asus_cp.dongmanbuy.activity.login.LoginActivity;
 import com.example.asus_cp.dongmanbuy.util.CheckMobileAndEmail;
 import com.example.asus_cp.dongmanbuy.util.MyApplication;
 import com.example.asus_cp.dongmanbuy.util.MyLog;
-import com.example.asus_cp.dongmanbuy.util.MyMd5;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -133,7 +132,7 @@ public class EmailRegisterFragment extends Fragment implements View.OnClickListe
                             Map<String,String> map = new HashMap<String,String>();
                             map.put("name", userName);
                             map.put("email", email);
-                            map.put("password", MyMd5.md5encode(passWord));
+                            map.put("password", passWord);
                             return map;
                         }
                     };

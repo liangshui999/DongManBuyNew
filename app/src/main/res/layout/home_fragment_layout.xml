@@ -490,7 +490,7 @@
             </com.example.asus_cp.dongmanbuy.customview.MyGridViewA>
 
             <!--版权所有部分的内容-->
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
@@ -500,7 +500,7 @@
                     android:text="@string/ban_quan"
                     android:textSize="18sp"
                     android:layout_margin="20dp"/>
-            </LinearLayout>
+            </LinearLayout>-->
 
         </LinearLayout>
     </com.example.asus_cp.dongmanbuy.customview.MyScrollView>

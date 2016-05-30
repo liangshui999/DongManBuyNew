@@ -71,4 +71,14 @@
     <string name="email_register">邮箱注册</string>
     <string name="user_name">用户名</string>
     <string name="input_email_number">请输入邮箱</string>
+    <string name="input_phone_number">请输入手机号</string>
+    <string name="find_password_by_phont_tips">为了您的安全，我们会向您的手机发送验证码</string>
+    <string name="next_step">下一步</string>
+    <string name="alse_find_by_email">您也可以通过邮箱找回</string>
+    <string name="find_password_by_email_tips">为了您的安全，我们会向您的邮箱发送验证码</string>
+    <string name="alse_find_by_phone">您也可以通过手机找回</string>
+    <string name="your_email_address">您的邮箱地址：</string>
+    <string name="please_input_email_yan_zheng_ma">请输入邮箱内收到的验证码</string>
+    <string name="please_input_new_password">请输入新密码</string>
+    <string name="confirm_change">确认修改</string>
 </resources>

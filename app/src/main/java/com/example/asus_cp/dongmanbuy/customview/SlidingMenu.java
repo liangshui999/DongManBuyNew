@@ -141,6 +141,7 @@ public class SlidingMenu extends HorizontalScrollView
                 break;
             // Up时，进行判断，如果显示区域大于菜单宽度一半则完全显示，否则隐藏
             case MotionEvent.ACTION_UP:
+                float scroolX=getScrollX();
                 float x=ev.getX();
                 float deltaX=x- myFirstX;
                 if(deltaX>150){
@@ -148,7 +149,7 @@ public class SlidingMenu extends HorizontalScrollView
                     isOpen = true;
                     MyLog.d(tag,"处理从左往右滑动"+isOpen);
                 }else{
-                    this.smoothScrollTo(600, 0);
+                    this.smoothScrollTo(mMenuWidth, 0);
                     isOpen = false;
                 }
                 return true;

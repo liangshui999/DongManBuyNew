@@ -1,4 +1,4 @@
-package com.example.asus_cp.dongmanbuy.activity;
+package com.example.asus_cp.dongmanbuy.activity.login;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

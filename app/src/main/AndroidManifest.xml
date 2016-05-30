@@ -29,10 +29,22 @@
         </activity>
 
         <!--登录activity-->
-        <activity android:name=".activity.LoginActivity"/>
+        <activity android:name=".activity.login.LoginActivity"/>
 
         <!--注册activity-->
-        <activity android:name=".activity.RegisterActivity"/>
+        <activity android:name=".activity.login.RegisterActivity"/>
+
+        <!--邮箱找回密码的actvity-->
+        <activity android:name=".activity.login.FindPassworByEmaildActivity"/>
+
+        <!--手机找回密码的actiity-->
+        <activity android:name=".activity.login.FindPassworByPhoneActivity"/>
+
+        <!--输验证码的activity-->
+        <activity android:name=".activity.login.FindByEmailYanZhengMaActiity"/>
+
+        <!--输新密码的activity-->
+        <activity android:name=".activity.login.ChangPasswordActivity"/>
 
         <!--搜索的activity-->
         <activity android:name=".activity.MySearchActivity">

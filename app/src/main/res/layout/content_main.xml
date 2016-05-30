@@ -14,9 +14,9 @@
         android:focusableInTouchMode="true">
         <ImageButton
             android:id="@+id/img_btn_login"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:layout_marginTop="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
             android:background="@mipmap/login"/>
         <SearchView
             android:id="@+id/search_view"
@@ -28,8 +28,10 @@
         </SearchView>
         <ImageButton
             android:id="@+id/img_btn_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="5dp"
             android:background="@mipmap/message"
             android:layout_marginTop="5dp"/>
     </LinearLayout>
@@ -66,8 +68,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@mipmap/message"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -81,8 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@mipmap/saoyisao"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -114,7 +116,8 @@
                 android:id="@+id/text_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/home"/>
+                android:text="@string/home"
+                android:textSize="@dimen/main_page_bottom_biao_qian_size"/>
         </LinearLayout>
 
         <LinearLayout
@@ -133,7 +136,8 @@
                 android:id="@+id/text_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/category"/>
+                android:text="@string/category"
+                android:textSize="@dimen/main_page_bottom_biao_qian_size"/>
         </LinearLayout>
 
         <LinearLayout
@@ -152,7 +156,8 @@
                 android:id="@+id/text_find"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/find"/>
+                android:text="@string/find"
+                android:textSize="@dimen/main_page_bottom_biao_qian_size"/>
         </LinearLayout>
 
         <LinearLayout
@@ -171,7 +176,8 @@
                 android:id="@+id/text_shop_street"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/shop_street"/>
+                android:text="@string/shop_street"
+                android:textSize="@dimen/main_page_bottom_biao_qian_size"/>
         </LinearLayout>
 
         <LinearLayout
@@ -190,7 +196,8 @@
                 android:id="@+id/text_shoppingz_car"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/shopping_car"/>
+                android:text="@string/shopping_car"
+                android:textSize="@dimen/main_page_bottom_biao_qian_size"/>
         </LinearLayout>
     </LinearLayout>
 

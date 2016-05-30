@@ -30,7 +30,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.asus_cp.dongmanbuy.R;
-import com.example.asus_cp.dongmanbuy.activity.LoginActivity;
+import com.example.asus_cp.dongmanbuy.activity.login.LoginActivity;
 import com.example.asus_cp.dongmanbuy.adapter.CaiNiXiHuanAdapter;
 import com.example.asus_cp.dongmanbuy.adapter.JingPinAdapter;
 import com.example.asus_cp.dongmanbuy.adapter.XianShiAdapter;
@@ -405,12 +405,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     }
                     JingPinAdapter jingPinAdapter=new JingPinAdapter(context,goodItems);
                     MyGridView gridView=new MyGridView(context);
-                    gridView.setColumnWidth(230);
+                    //gridView.setColumnWidth(230);
                     gridView.setHorizontalSpacing(5);
                     gridView.setVerticalSpacing(5);
                     gridView.setGravity(Gravity.CENTER);
                     gridView.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
-                    gridView.setNumColumns(GridView.AUTO_FIT);
+                    gridView.setNumColumns(3);
                     gridView.setAdapter(jingPinAdapter);
                     gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -468,6 +468,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 List<Good> goods=parseCaiNiLikeAndJingPin(s);
                 CaiNiXiHuanAdapter caiNiXiHuanAdapter=new CaiNiXiHuanAdapter(context,goods);
                 caiNiXiHuanGridView.setAdapter(caiNiXiHuanAdapter);
+                //CategoryImageLoadHelper.setGridViewViewHeightBasedOnChildren(caiNiXiHuanGridView);
                 caiNiXiHuanGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

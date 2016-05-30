@@ -1,4 +1,4 @@
-package com.example.asus_cp.dongmanbuy.activity;
+package com.example.asus_cp.dongmanbuy.activity.login;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,7 +23,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.asus_cp.dongmanbuy.R;
 import com.example.asus_cp.dongmanbuy.util.MyApplication;
 import com.example.asus_cp.dongmanbuy.util.MyLog;
-import com.example.asus_cp.dongmanbuy.util.MyMd5;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +51,8 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     private LinearLayout qqLinearLayout;//qq
     private LinearLayout weiBoLinearLayout;//微博
     private LinearLayout weiXinLinearLayout;//微信
+
+    public static final String USER_NAME_KEY="userName";//向下一个activity传递username时的键
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,8 +98,11 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 }
                 passwordFlag++;
                 break;
-            case R.id.text_forget_password:
-                Toast.makeText(this,"点击了忘记密码",Toast.LENGTH_SHORT).show();
+            case R.id.text_forget_password://忘记密码
+                String userName=zhangHaoEditText.getText().toString();
+                Intent forgetIntent=new Intent(this,FindPassworByPhoneActivity.class);
+                forgetIntent.putExtra(USER_NAME_KEY,userName);
+                startActivity(forgetIntent);
                 break;
             case R.id.btn_login://登录
                 final String zhangHao=zhangHaoEditText.getText().toString();
@@ -108,21 +115,30 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                     StringRequest loginRequest=new StringRequest(Request.Method.POST, loginUrl, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String s) {
-                            MyLog.d(tag,"登录的数据返回:"+s);
-                            Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
+                            MyLog.d(tag, "登录的数据返回:" + s);
+                            try {
+                                JSONObject jsonObject=new JSONObject(s);
+                                JSONObject jsonObject1=jsonObject.getJSONObject("data");
+                                if(jsonObject1!=null){
+                                    Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                Toast.makeText(LoginActivity.this,"登录失败",Toast.LENGTH_SHORT).show();
+                                e.printStackTrace();
+                            }
                         }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
-
+                            Toast.makeText(LoginActivity.this,"登录失败",Toast.LENGTH_SHORT).show();
                         }
                     }){
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String,String> map = new HashMap<String,String>();
                             map.put("name", zhangHao);
-                            map.put("password", MyMd5.md5encode(password));
-                            MyLog.d(tag,MyMd5.md5encode(password));
+                            map.put("password", password);
+                            //MyLog.d(tag,MyMd5.md5encode(password));
                             return map;
                         }
                     };
